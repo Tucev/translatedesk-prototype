@@ -1,0 +1,8 @@
+~*
+*.swo
+*.swp
+.bundle
+tmp
+config/database.yml
+config/twitter.yml
+log

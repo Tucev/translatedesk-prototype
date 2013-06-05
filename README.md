@@ -1,4 +1,5 @@
-meedan-translatedesk
-====================
+## Translatedesk Prototype
 
-Translatedesk
+# TODO:
+* Automated tests
+* l10n / i18n

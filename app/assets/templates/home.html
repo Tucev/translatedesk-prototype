@@ -1,0 +1,27 @@
+<div class="container-fluid">
+
+  <div id="translator-request-queue" class="sidebar left" ng-controller="TwitterController">
+    <div class="well">
+      <h5>Translator Request Queue</h5>
+      <form ng-submit="fetch()">
+        <input type="text" ng-model="tweetQuery" placeholder="Search by keywork, #hashtag or @username">
+        <button>Search</button>
+      </form>
+      <div class="message">{{message}}</div>
+      <ul>
+        <li class="tweet" ng-repeat="tweet in tweets">{{tweet.text}}</li>
+      </ul>
+    </div>
+  </div>
+   
+  <div id="dictionary" class="sidebar right">
+    <div class="well">
+      <h5>Dictionary</h5>
+    </div>
+  </div>
+
+  <div id="translation-workbench" class="content fixed-fixed">
+    <h5>Translation Workbench</h5>
+  </div>
+
+</div>

@@ -1,0 +1,7 @@
+// Declare app level module which depends on filters, and services
+angular.module('translatedesk.resources', ['ngResource']);
+angular.module('translatedesk.services', ['ngResource']);
+angular.module('translatedesk.directives', []);
+angular.module('translatedesk.filters', []);
+angular.module('translatedesk.controllers', ['ngCookies']);
+var App = angular.module('translatedesk', ['translatedesk.resources', 'translatedesk.services', 'translatedesk.directives', 'translatedesk.filters', 'translatedesk.controllers', '$strap.directives']);

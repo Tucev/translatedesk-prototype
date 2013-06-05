@@ -1,0 +1,20 @@
+# Register an app at http://dev.twitter.com/apps
+# Copy this file to config/twitter.yml
+
+development:
+  consumer_key : 'your consumer key'
+  consumer_secret : 'your consumer secret'
+  oauth_token : 'your access token'
+  oauth_token_secret : 'your access token secret'
+
+production:
+  consumer_key : 'your consumer key'
+  consumer_secret : 'your consumer secret'
+  oauth_token : 'your access token'
+  oauth_token_secret : 'your access token secret'
+
+test:
+  consumer_key : 'your consumer key'
+  consumer_secret : 'your consumer secret'
+  oauth_token : 'your access token'
+  oauth_token_secret : 'your access token secret'

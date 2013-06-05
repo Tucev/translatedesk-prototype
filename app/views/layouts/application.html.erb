@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html ng-app="translatedesk">
+
+  <head>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= content_for?(:title) ? yield(:title) : "Translatedesk" %></title>
+    <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Translatedesk" %>">
+
+    <link rel="shortcut icon" href="<%= asset_path("favicon.ico") %>" type="image/x-icon" />
+    <%= stylesheet_link_tag "libs", :media => "all" %>
+    <%= stylesheet_link_tag "application", :media => "all" %>
+    <%= csrf_meta_tags %>
+
+    <%= yield(:head) %>
+
+  </head>
+
+  <body>
+    <div id="main" role="main">
+
+      <!-- Navbar -->
+      <div class="navbar" bs-navbar>
+        <div class="navbar-inner">
+          <a class="brand" href="/"><%= image_tag("logo.png", :size => "32x32") %></a>
+          <ul class="nav">
+            <li data-match-route="/(:?home)"><a href="/home">Home</a></li>
+          </ul>
+          <div class="user" ng-switch="isLoggedIn" ng-controller="SessionsController">
+            <div class="user-logged-in" ng-switch-when="true">
+              <button ng-click="destroy()">Logout</button>
+            </div>
+            <div class="user-logged-out" ng-switch-when="false">
+              <a href="/register">Sign up</a>
+              <form ng-submit="create()">
+                <div class="message">{{message}}</div>
+                <input type="email" id="email" name="email" placeholder="Email" ng-model="session.email" ng-minlength="2" required>
+                <input type="password" id="password" name="password" placeholder="Password" ng-model="session.password" ng-minlength="2" password-validate required>
+                <button type="submit" class="btn">Login</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <%= yield %>
+      </div>
+      
+      <footer></footer>
+    
+    </div>
+    <%= javascript_include_tag "libs" %>
+    <%= javascript_include_tag "application" %>
+  </body>
+</html>
