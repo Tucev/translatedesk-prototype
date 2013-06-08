@@ -6,10 +6,18 @@
       <form ng-submit="fetch()">
         <input type="text" ng-model="tweetQuery" placeholder="Search by keywork, #hashtag or @username">
         <button>Search</button>
+
+        <label>Sort by...</label>
+        <select ng-model="sortCriteria">
+          <option value="popularity">Popularity</option>
+          <option value="created_at">Date and Time</option>
+          <option value="distance">Location</option>
+          <option value="">Translation Status</option>
+        </select>
       </form>
       <div class="message">{{message}}</div>
       <ul>
-        <li class="tweet" ng-repeat="tweet in tweets" ng-include="'/assets/tweet.html'"></li>
+        <li class="tweet" ng-repeat="tweet in tweets | orderBy:sortQueue" ng-include="'/assets/tweet.html'"></li>
       </ul>
     </div>
   </div>

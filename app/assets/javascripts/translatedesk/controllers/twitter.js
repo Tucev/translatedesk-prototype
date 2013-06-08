@@ -1,5 +1,4 @@
 //
-var debug;
 angular.module('translatedesk.controllers').controller('TwitterController', ['$scope', '$location', 'Tweet', function($scope, $location, Tweet) {
 
   $scope.tweets = [];
@@ -14,6 +13,15 @@ angular.module('translatedesk.controllers').controller('TwitterController', ['$s
     .error(function(data, status, headers, config) {
       $scope.message = 'Could not fetch data';
     });
+  };
+
+  $scope.sortCriteria = 'popularity';
+
+  // Override default behavior, which is sorting by strings
+  $scope.sortQueue = function(t) {
+    result = t[$scope.sortCriteria];
+    if (isNaN(result)) return result;
+    return parseInt(result);
   };
 
 }]);

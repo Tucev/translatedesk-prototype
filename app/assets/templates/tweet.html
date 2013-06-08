@@ -1,5 +1,27 @@
+<!-- Uncomment to enable rich view
 <blockquote class="twitter-tweet">
   <p>{{tweet.text}}</p> &mdash; {{tweet.user.name}} (@{{tweet.user.screen_name}})
   <a href="https://twitter.com/{{tweet.user.screen_name}}/status/{{tweet.id_str}}" data-datetime="{{tweet.created_at}}"></a>
   <script src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 </blockquote>
+-->
+<div class="tweet">
+  <img src="{{tweet.user.profile_image_url}}" alt="" />
+  <div class="tweet-content">
+    <p>
+      <span class="tweet-user">{{tweet.user.name}} (@{{tweet.user.screen_name}})</span> 
+      <span class="tweet-text">{{tweet.text}}</span>
+    </p>
+    <ul class="tweet-stats">
+      <li><span>{{tweet.translations_count}}</span> translations</li>
+      <li><span>{{tweet.retweet_count}}</span> retweets</li>
+      <li><span>{{tweet.favorite_count}}</span> favorite</li>
+      <li><span>{{tweet.popularity}}</span> popularity</li>
+      <li ng-show="tweet.distance >= 0"><span>{{tweet.distance}}</span> km of distance</li>
+    </ul>
+  </div>
+  <div class="tweet-footer">
+    <span data-datetime="{{tweet.created_at}}">{{tweet.created_at | date:'yyyy-MM-dd HH:mm:ss Z'}}</span> 
+    <a ng-click="translate()">translate</a>
+  </div>
+</div>
