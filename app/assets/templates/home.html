@@ -12,12 +12,35 @@
           <option value="popularity">Popularity</option>
           <option value="created_at">Date and Time</option>
           <option value="distance">Location</option>
-          <option value="">Translation Status</option>
         </select>
+
+        <label>Sort order</label>
+        <select ng-model="sortOrder">
+          <option value="">Ascending</option>
+          <option value="reverse">Descending</option>
+        </select>
+
+        <label>Limit</label>
+        <select ng-model="searchLimit" ng-change="tweets.length && fetch()">
+          <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+
+        <div class="filters">
+          <input type="checkbox" ng-model="filter.in_reply_to_status_id" /> contains @reply
+          <input type="checkbox" ng-model="filter.is_not_reply" /> no @reply
+          <input type="checkbox" ng-model="filter.retweeted_status" /> contains "RT"
+          <input type="checkbox" ng-model="filter.media_count" /> contains image
+          <input type="checkbox" ng-model="filter.urls_count" /> contains link
+          <input type="checkbox" ng-model="filter.distance" /> contains location
+        </div>
       </form>
       <div class="message">{{message}}</div>
+      <h5 class="results-count" ng-show="(tweets | filter:filterQueue).length">There are {{(tweets | filter:filterQueue).length}} tweets.</h5>
       <ul>
-        <li class="tweet" ng-repeat="tweet in tweets | orderBy:sortQueue" ng-include="'/assets/tweet.html'"></li>
+        <li class="tweet" ng-repeat="tweet in tweets | orderBy:sortQueue:sortOrder | filter:filterQueue" ng-include="'/assets/tweet.html'"></li>
       </ul>
     </div>
   </div>

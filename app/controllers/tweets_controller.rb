@@ -4,7 +4,7 @@ class TweetsController < ApplicationController
 
   # Get tweets from twitter
   def fetch
-    respond_with Tweet.fetch(params[:query].to_s)
+    respond_with Tweet.fetch(params[:query].to_s, params[:options])
   end
 
 end

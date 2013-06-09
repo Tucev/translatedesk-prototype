@@ -35,19 +35,25 @@ angular.module('translatedesk.resources').factory('Tweet', ['$http', function($h
     );
   }
 
-  Tweet.prototype.$fetch = function(query) {
+  Tweet.prototype.$fetch = function(query, options) {
     return $http.get('/tweets/fetch', {
       params : { 
-        query : query
+        query : query,
+        'options[count]' : options.count
       },
       transformResponse : $http.defaults.transformResponse.concat([
         function(data, headersGetter) {
 
             for (var i = 0; i < data.length; i++) { // FIXME: Is there a better way to iterate?
+
+              // Set additional data for the tweet
               data[i].popularity = popularity(data[i]);
               data[i].created_at = Date.parse(data[i].created_at);
-              if (!Tweet.userPosition || !data[i].geo) data[i].distance = -1;
-              else data[i].distance = haversine(data[i].geo.coordinates[0], data[i].geo.coordinates[1], Tweet.userPosition.coords.latitude, Tweet.userPosition.coords.longitude).toFixed(2);
+              data[i].media_count = (data[i].entities && data[i].entities.media && data[i].entities.media.length);
+              data[i].urls_count = (data[i].entities && data[i].entities.urls && data[i].entities.urls.length);
+              data[i].is_not_reply = !data[i].in_reply_to_status_id;
+              if (Tweet.userPosition && data[i].geo) data[i].distance = haversine(data[i].geo.coordinates[0], data[i].geo.coordinates[1], Tweet.userPosition.coords.latitude, Tweet.userPosition.coords.longitude).toFixed(2);
+
             }
 
             return data;

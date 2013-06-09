@@ -40,4 +40,10 @@ class TweetTest < ActiveSupport::TestCase
     end
   end
 
+  test "fetch custom amount of tweets when provided" do
+    assert_equal 1, Tweet.fetch(342256739451801600, { :count => 50 }).size
+    assert_equal 50, Tweet.fetch('ruby', { :count => 50 }).size
+    assert_equal 50, Tweet.fetch('@meedan', { :count => 50 }).size
+  end
+
 end
