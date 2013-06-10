@@ -27,7 +27,7 @@ FIXME: Evaluate if rich view is better than a custom template, like we do below
   <div class="tweet-media" ng-show="tweet.media_count">
     <img ng-src="{{tweet.entities.media[0].media_url}}" />
   </div>
-  <a ng-click="loadConversation(tweet)">View full conversation</a>
+  <a ng-click="loadConversation(tweet)" ng-show="tweet.in_reply_to_status_id">View full conversation</a>
   <ul class="tweet-conversation">
     <li ng-repeat="reply in tweet.conversation">
       <span class="tweet-user">{{reply.user.name}} (@{{reply.user.screen_name}})</span> 
