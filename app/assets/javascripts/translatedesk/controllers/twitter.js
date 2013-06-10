@@ -31,4 +31,11 @@ angular.module('translatedesk.controllers').controller('TwitterController', ['$s
     return true;
   };
 
+  $scope.loadConversation = function(t) {
+    Tweet.prototype.$conversation(t.id_str)
+    .success(function(data, status, headers, config) {
+      t.conversation = data;
+    });
+  };
+
 }]);

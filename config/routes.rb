@@ -1,7 +1,7 @@
 Translatedesk::Application.routes.draw do
   resources :tweets do
     collection do
-      get 'fetch' 
+      get 'fetch', 'conversation'
     end
   end
 

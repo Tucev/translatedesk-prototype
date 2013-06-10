@@ -1,4 +1,5 @@
 <!-- Uncomment to enable rich view
+FIXME: Evaluate if rich view is better than a custom template, like we do below
 <blockquote class="twitter-tweet">
   <p>{{tweet.text}}</p> &mdash; {{tweet.user.name}} (@{{tweet.user.screen_name}})
   <a href="https://twitter.com/{{tweet.user.screen_name}}/status/{{tweet.id_str}}" data-datetime="{{tweet.created_at}}"></a>
@@ -23,4 +24,15 @@
     <span data-datetime="{{tweet.created_at}}">{{tweet.created_at | date:'h:mma Z d MMM yy'}}</span> 
     <a ng-click="translate()">translate</a>
   </div>
+  <div class="tweet-media" ng-show="tweet.media_count">
+    <img ng-src="{{tweet.entities.media[0].media_url}}" />
+  </div>
+  <a ng-click="loadConversation(tweet)">View full conversation</a>
+  <ul class="tweet-conversation">
+    <li ng-repeat="reply in tweet.conversation">
+      <span class="tweet-user">{{reply.user.name}} (@{{reply.user.screen_name}})</span> 
+      <span class="tweet-text">{{reply.text}}</span> 
+      <span data-datetime="{{reply.created_at}}">{{reply.created_at | date:'h:mma Z d MMM yy'}}</span>
+    </li>
+  </ul>
 </div>

@@ -25,4 +25,18 @@ class Tweet < ActiveRecord::Base
       
   end
 
+  # Fetch a conversation from a tweet
+  # Uses an experimental method which won't be supported on 1.1 API
+  # FIXME: We need a more reliable way to do this
+  def self.conversation(status_id)
+    begin
+      require 'net/http'
+      uri = URI.parse "http://api.twitter.com/1/related_results/show/#{status_id}.json"
+      response = Net::HTTP.get_response uri
+      data = JSON.parse response.body
+      data.first['results'].collect{ |t| t['value'] }
+    rescue
+      []
+    end
+  end
 end

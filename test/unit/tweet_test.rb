@@ -46,4 +46,11 @@ class TweetTest < ActiveSupport::TestCase
     assert_equal 50, Tweet.fetch('@meedan', { :count => 50 }).size
   end
 
+  test "load a conversation for a tweet" do
+    assert_equal [], Tweet.conversation(342256739451801600)
+    conversation = Tweet.conversation(306023092684214273)
+    assert_kind_of Array, conversation
+    assert_equal 2, conversation.size
+  end
+
 end

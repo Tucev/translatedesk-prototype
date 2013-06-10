@@ -1,4 +1,4 @@
-//
+// FIXME: Replace some methods by RESTFUL resources
 angular.module('translatedesk.resources').factory('Tweet', ['$http', function($http) {
 
   var Tweet = function(options) {
@@ -59,6 +59,14 @@ angular.module('translatedesk.resources').factory('Tweet', ['$http', function($h
             return data;
         }
       ])
+    });
+  };
+
+  Tweet.prototype.$conversation = function(status_id) {
+    return $http.get('/tweets/conversation', {
+      params : { 
+        status_id : status_id
+      }
     });
   };
 
