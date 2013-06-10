@@ -24,13 +24,14 @@ Written in Ruby On Rails 3 (Ruby 1.9) + AngularJS.
 * Define the 1.9.1 version as the default for Rake: `sudo update-alternatives --config rake`
 * Install the Passenger gem: `sudo gem install passenger`
 * Install the Passenger module for Apache: `sudo passenger-install-apache2-module`
-* Load Passenger modules for Apache:
-  `cat /etc/apache2/conf.d/rails
+* Load Passenger modules for Apache: `cat /etc/apache2/conf.d/rails`
+  ```apache
    LoadModule passenger_module /var/lib/gems/1.9.1/gems/passenger-4.0.5/libout/apache2/mod_passenger.so
    PassengerRoot /var/lib/gems/1.9.1/gems/passenger-4.0.5
-   PassengerDefaultRuby /usr/bin/ruby1.9.1`
-* Create a site for the application on Apache and enable it:
-  `cat /etc/apache2/sites-enabled/translatedesk 
+   PassengerDefaultRuby /usr/bin/ruby1.9.1
+  ```
+* Create a site for the application on Apache and enable it: `cat /etc/apache2/sites-enabled/translatedesk`
+  ```apache
    <VirtualHost *:80>
      ServerName translatedesk.yourdomain.com
      RailsEnv production
@@ -40,5 +41,6 @@ Written in Ruby On Rails 3 (Ruby 1.9) + AngularJS.
        # MultiViews must be turned off.
        Options -MultiViews
      </Directory>
-   </VirtualHost>`
+   </VirtualHost>
+  ```
 * Execute the four first steps of the application installation above
