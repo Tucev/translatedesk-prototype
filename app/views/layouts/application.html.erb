@@ -28,15 +28,15 @@
           </ul>
           <div class="user" ng-switch="isLoggedIn" ng-controller="SessionsController">
             <div class="user-logged-in" ng-switch-when="true">
-              <button ng-click="destroy()">Logout</button>
+              <button ng-click="destroy()" class="btn">Logout</button>
             </div>
             <div class="user-logged-out" ng-switch-when="false">
-              <a href="/register">Sign up</a>
               <form ng-submit="create()">
-                <div class="message">{{message}}</div>
                 <input type="email" id="email" name="email" placeholder="Email" ng-model="session.email" ng-minlength="2" required>
                 <input type="password" id="password" name="password" placeholder="Password" ng-model="session.password" ng-minlength="2" password-validate required>
                 <button type="submit" class="btn">Login</button>
+                <a href="/register">Sign up</a>
+                <span class="message" ng-show="message">{{message}}</span>
               </form>
             </div>
           </div>

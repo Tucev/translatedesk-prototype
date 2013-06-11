@@ -1,0 +1,17 @@
+/* General formatting goes here */
+
+.message {
+  color: $white;
+  padding: $unit/5 $unit/2;
+  border: 1px solid $white;
+  background: $darkAluminium;
+  @include rounded-corners($unit / 2);
+}
+
+.message.error {
+  background: $darkScarletRed;
+}
+
+.message.success {
+  background: $darkChameleon;
+}

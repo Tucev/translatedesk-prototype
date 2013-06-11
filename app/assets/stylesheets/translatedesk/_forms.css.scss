@@ -1,0 +1,36 @@
+form {
+  input, select {
+    max-width: 100%;
+    width: 100%;
+  }
+}
+
+#translator-request-queue {
+
+  .searchbox {
+    margin: $unit 0;
+  
+    button, input {
+      display: inline;
+      margin: $unit / 2;
+    }
+  
+    input {
+      width: 60%;
+    }
+  
+    button {
+      width: 30%;
+      min-width: 8 * $unit;
+    }
+  }
+
+  .filters {
+    margin: 0;
+
+    li {
+      list-style: none;
+    }
+  }
+
+}

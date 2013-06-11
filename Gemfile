@@ -10,6 +10,7 @@ gem 'thin'
 gem 'sass-rails', '~> 3.2.3'
 gem 'bootstrap-sass', '~> 2.1.0'
 gem 'twitter'
+gem 'sass'
 
 #
 group :development do

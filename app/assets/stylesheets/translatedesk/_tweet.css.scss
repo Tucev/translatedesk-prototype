@@ -1,0 +1,91 @@
+.tweets {
+  margin: 0;
+}
+
+.tweet {
+  list-style: none;
+  background: $white;
+  padding: $unit / 2;
+  margin-bottom: $unit;
+  width: 95%;
+  font-size: $medium;
+  @include rounded-corners($unit/2);
+
+  .tweet-profile-image,
+  .tweet-content {
+    float: left;
+  }
+
+  .tweet-profile-image {
+    width: 10%;
+  }
+
+  .tweet-content {
+    width: 65%;
+    padding: 0 $unit/2;
+    color: $black;
+
+    .tweet-user {
+      color: $darkSkyBlue; 
+    }
+  }
+
+  .tweet-stats {
+    margin: 0;
+    margin-bottom: $unit;
+
+    li {
+      float: left;
+      list-style: none;
+      margin-right: $unit * 2;
+      color: $skyBlue;
+
+      span {
+        font-weight: bold;
+        font-size: $large;
+      }
+    }
+  }
+
+  .tweet-media, .tweet-load-conversation, .tweet-conversation, .tweet-view-media {
+    clear: both;
+  }
+
+  .tweet-media img {
+    margin-top: $unit;
+  }
+
+  .tweet-load-conversation, .tweet-view-media {
+    margin: $unit 0;
+    display: block;
+  }
+
+  .tweet-actions {
+    float: right;
+    width: 15%;
+    padding-right: $unit/2;
+    font-size: $small;
+  }
+
+  .tweet-footer {
+    clear: both;
+  }
+
+  .tweet-date {
+    color: $darkAluminium;
+    display: block;
+  }
+
+  .tweet-conversation {
+    margin: 0;
+    margin-top: $unit;
+
+    li {
+      list-style: none;
+      background: $lightGrey;
+      margin-bottom: $unit;
+      padding: $unit;
+      @include rounded-corners(5px);
+    }
+  }
+}

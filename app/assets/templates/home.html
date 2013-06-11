@@ -1,58 +1,57 @@
-<div class="container-fluid">
+<div id="translator-request-queue" class="span4" ng-controller="TwitterController">
+  <div class="well">
+    <h5>Translator Request Queue</h5>
+    <form ng-submit="fetch()">
+      <div class="searchbox">
+        <input type="text" ng-model="tweetQuery" placeholder="Keywork, #hashtag or @username">
+        <button class="btn">Search</button>
+      </div>
 
-  <div id="translator-request-queue" class="sidebar left" ng-controller="TwitterController">
-    <div class="well">
-      <h5>Translator Request Queue</h5>
-      <form ng-submit="fetch()">
-        <input type="text" ng-model="tweetQuery" placeholder="Search by keywork, #hashtag or @username">
-        <button>Search</button>
+      <label>Sort by</label>
+      <select ng-model="sortCriteria">
+        <option value="popularity">Popularity</option>
+        <option value="created_at">Date and Time</option>
+        <option value="distance">Location</option>
+      </select>
 
-        <label>Sort by...</label>
-        <select ng-model="sortCriteria">
-          <option value="popularity">Popularity</option>
-          <option value="created_at">Date and Time</option>
-          <option value="distance">Location</option>
-        </select>
+      <label>Sort order</label>
+      <select ng-model="sortOrder">
+        <option value="">Ascending</option>
+        <option value="reverse">Descending</option>
+      </select>
 
-        <label>Sort order</label>
-        <select ng-model="sortOrder">
-          <option value="">Ascending</option>
-          <option value="reverse">Descending</option>
-        </select>
+      <label>Limit</label>
+      <select ng-model="searchLimit" ng-change="tweets.length && fetch()">
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
 
-        <label>Limit</label>
-        <select ng-model="searchLimit" ng-change="tweets.length && fetch()">
-          <option value="10">10</option>
-          <option value="20">20</option>
-          <option value="50">50</option>
-          <option value="100">100</option>
-        </select>
-
-        <div class="filters">
-          <input type="checkbox" ng-model="filter.in_reply_to_status_id" /> contains @reply
-          <input type="checkbox" ng-model="filter.is_not_reply" /> no @reply
-          <input type="checkbox" ng-model="filter.retweeted_status" /> contains "RT"
-          <input type="checkbox" ng-model="filter.media_count" /> contains image
-          <input type="checkbox" ng-model="filter.urls_count" /> contains link
-          <input type="checkbox" ng-model="filter.distance" /> contains location
-        </div>
-      </form>
-      <div class="message">{{message}}</div>
-      <h5 class="results-count" ng-show="(tweets | filter:filterQueue).length">There are {{(tweets | filter:filterQueue).length}} tweets.</h5>
-      <ul>
-        <li class="tweet" ng-repeat="tweet in tweets | orderBy:sortQueue:sortOrder | filter:filterQueue" ng-include="'/assets/tweet.html'"></li>
+      <label>Filters</label>
+      <ul class="filters">
+        <li><input type="checkbox" ng-model="filter.in_reply_to_status_id" /> contains @reply</li>
+        <li><input type="checkbox" ng-model="filter.is_not_reply" /> no @reply</li>
+        <li><input type="checkbox" ng-model="filter.retweeted_status" /> contains "RT"</li>
+        <li><input type="checkbox" ng-model="filter.media_count" /> contains image</li>
+        <li><input type="checkbox" ng-model="filter.urls_count" /> contains link</li>
+        <li><input type="checkbox" ng-model="filter.distance" /> contains location</li>
       </ul>
-    </div>
+    </form>
+    <div class="message" ng-show="message">{{message}}</div>
+    <h5 class="results-count" ng-show="(tweets | filter:filterQueue).length">There are {{(tweets | filter:filterQueue).length}} tweets.</h5>
+    <ul class="tweets">
+      <li class="tweet" ng-repeat="tweet in tweets | orderBy:sortQueue:sortOrder | filter:filterQueue" ng-include="'/assets/tweet.html'"></li>
+    </ul>
   </div>
-   
-  <div id="dictionary" class="sidebar right">
-    <div class="well">
-      <h5>Dictionary</h5>
-    </div>
-  </div>
+</div>
+ 
+<div id="translation-workbench" class="span5">
+  <h5>Translation Workbench</h5>
+</div>
 
-  <div id="translation-workbench" class="content fixed-fixed">
-    <h5>Translation Workbench</h5>
+<div id="dictionary" class="span3">
+  <div class="well">
+    <h5>Dictionary</h5>
   </div>
-
 </div>
