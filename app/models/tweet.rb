@@ -30,11 +30,19 @@ class Tweet < ActiveRecord::Base
   # FIXME: We need a more reliable way to do this
   def self.conversation(status_id)
     begin
-      require 'net/http'
-      uri = URI.parse "http://api.twitter.com/1/related_results/show/#{status_id}.json"
-      response = Net::HTTP.get_response uri
-      data = JSON.parse response.body
-      data.first['results'].collect{ |t| t['value'] }
+      # Not working anymore
+      # require 'net/http'
+      # uri = URI.parse "http://api.twitter.com/1.1/related_results/show/#{status_id}.json"
+      # response = Net::HTTP.get_response uri
+      # data = JSON.parse response.body
+      # data.first['results'].collect{ |t| t['value'] }
+      tweets = []
+      while status_id.present? do
+        tweet = Twitter.status status_id
+        tweets << tweet
+        status_id = tweet[:in_reply_to_status_id]
+      end
+      tweets
     rescue
       []
     end
