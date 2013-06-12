@@ -13,7 +13,7 @@ angular.module('translatedesk.controllers').controller('SessionsController', ['$
         $scope.message = 'Logged in successfully';
       })
       .error(function(data, status, headers, config) {
-        $scope.message = 'Could not login';
+        $scope.message = 'Sorry, could not login';
       });
     }
     else {
