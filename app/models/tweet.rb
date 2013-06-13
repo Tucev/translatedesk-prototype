@@ -36,6 +36,8 @@ class Tweet < ActiveRecord::Base
       # response = Net::HTTP.get_response uri
       # data = JSON.parse response.body
       # data.first['results'].collect{ |t| t['value'] }
+      # FIXME Check if this suggestion is a good solution:
+      # https://github.com/sferik/twitter/issues/299#issuecomment-7429430
       tweets = []
       while status_id.present? do
         tweet = Twitter.status status_id
