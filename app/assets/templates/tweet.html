@@ -6,7 +6,7 @@ FIXME: Evaluate if rich view is better than a custom template, like we do below
   <script src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 </blockquote>
 -->
-<div class="tweet">
+<div class="tweet" ng-controller="TwitterController">
 
   <div class="tweet-body">
     <img class="tweet-profile-image" src="{{tweet.user.profile_image_url}}" alt="" />
@@ -41,7 +41,7 @@ FIXME: Evaluate if rich view is better than a custom template, like we do below
 
     <div class="tweet-actions">
       <span data-datetime="{{tweet.created_at}}" class="tweet-date">{{tweet.created_at | date:'h:mma Z d MMM yy'}}</span> 
-      <a ng-click="translate()">translate &raquo;</a>
+      <a ng-click="translate(tweet)" ng-hide="tweet == workbench.source">translate &raquo;</a>
     </div>
   </div>
 

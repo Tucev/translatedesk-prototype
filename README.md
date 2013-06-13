@@ -14,6 +14,8 @@ Written in Ruby On Rails 3 (Ruby 1.9) + AngularJS.
 ### TODO:
 * Automated tests
 * l10n / i18n
+* Pluralize strings
+* Fix FIXMEs
 
 ### Deployment with Ubuntu 12.04 + Ruby 1.9 + Apache + Passenger
 

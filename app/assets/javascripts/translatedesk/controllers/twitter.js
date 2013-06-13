@@ -38,4 +38,10 @@ angular.module('translatedesk.controllers').controller('TwitterController', ['$s
     });
   };
 
+  $scope.workbench = Tweet.workbench;
+
+  $scope.translate = function(t) {
+    $scope.workbench.source = t;
+  };
+
 }]);

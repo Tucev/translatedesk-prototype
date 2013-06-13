@@ -2,26 +2,26 @@
   <div class="well">
     <h5>Translator Request Queue</h5>
     <form ng-submit="fetch()">
-      <div class="searchbox">
-        <input type="text" ng-model="tweetQuery" placeholder="Keywork, #hashtag or @username">
+      <div class="searchbox controls controls-row input-append">
+        <input type="text" class="span9" ng-model="tweetQuery" placeholder="Keywork, #hashtag or @username">
         <button class="btn">Search</button>
       </div>
 
       <label>Sort by</label>
-      <select ng-model="sortCriteria">
+      <select ng-model="sortCriteria" class="span12">
         <option value="popularity">Popularity</option>
         <option value="created_at">Date and Time</option>
         <option value="distance">Location</option>
       </select>
 
       <label>Sort order</label>
-      <select ng-model="sortOrder">
+      <select ng-model="sortOrder" class="span12">
         <option value="">Ascending</option>
         <option value="reverse">Descending</option>
       </select>
 
       <label>Limit</label>
-      <select ng-model="searchLimit" ng-change="tweets.length && fetch()">
+      <select ng-model="searchLimit" ng-change="tweets.length && fetch()" class="span12">
         <option value="10">10</option>
         <option value="20">20</option>
         <option value="50">50</option>
@@ -46,8 +46,24 @@
   </div>
 </div>
  
-<div id="translation-workbench" class="span5">
+<div id="translation-workbench" class="span5" ng-controller="TranslationController">
   <h5>Translation Workbench</h5>
+  
+  <!-- FIXME: Is there a way to bind variables instead of using ng-repeat? -->
+  <div class="translation-workbench-inner" ng-show="workbench.source" ng-repeat="tweet in [workbench.source]">
+
+    <div id="translation-source" class="well">
+      <div ng-include="'/assets/tweet.html'"></div>
+    </div>
+
+    <div id="translation-target" class="well">
+      <form>
+        <textarea ng-model="translatedTweet" ng-init="prepareTranslation(tweet)" class="span12"></textarea>
+        <p class="counter">{{140 - translatedTweet.length}} characters remaining</p>
+      </form>
+    </div>
+
+  </div>
 </div>
 
 <div id="dictionary" class="span3">

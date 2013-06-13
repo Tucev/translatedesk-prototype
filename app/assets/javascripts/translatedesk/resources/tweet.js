@@ -1,3 +1,4 @@
+var debug;
 // FIXME: Replace some methods by RESTFUL resources
 angular.module('translatedesk.resources').factory('Tweet', ['$http', function($http) {
 
@@ -69,6 +70,9 @@ angular.module('translatedesk.resources').factory('Tweet', ['$http', function($h
       }
     });
   };
+
+  // The tweet the user is working on right now
+  Tweet.workbench = { source : null };
 
   return Tweet;
 
