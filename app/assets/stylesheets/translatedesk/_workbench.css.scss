@@ -1,0 +1,16 @@
+#translation-workbench {
+
+  #translation-target {
+
+    .counter {
+      font-size: $small;
+      text-align: right;
+      color: $darkChameleon;
+      &.tweet-limit-exausted {
+        color: $darkScarletRed;
+      }
+    }
+
+  }
+
+}

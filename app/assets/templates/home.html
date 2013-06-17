@@ -59,7 +59,7 @@
     <div id="translation-target" class="well">
       <form>
         <textarea ng-model="translatedTweet" ng-init="prepareTranslation(tweet)" class="span12"></textarea>
-        <p class="counter">{{140 - translatedTweet.length}} characters remaining</p>
+        <p class="counter" ng-class="{ 'tweet-limit-exausted' : translatedTweet.length > 140 }">{{140 - translatedTweet.length}} characters remaining</p>
       </form>
     </div>
 
