@@ -18,7 +18,7 @@ angular.module('translatedesk.controllers').controller('TranslationController', 
         }
       }
     }
-    $scope.translatedTweet = (t ? 'TT @' + t.user.screen_name + ' ' + hashtags.concat(mentions).join(' ') : '');
+    $scope.translatedTweet = (t ? 'TT @' + t.user.screen_name + ' ' + hashtags.concat(mentions).join(' ') + ' ' : '');
   };
 
 }]);
