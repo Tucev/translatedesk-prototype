@@ -12,6 +12,6 @@ class TweetDraftsController < ApplicationController
 
   # FIXME: Using original_tweet_id instead of id here
   def show
-    respond_with TweetDraft.find_by_original_tweet_id(params[:id])
+    respond_with TweetDraft.find_by_user_id_and_original_tweet_id(current_user.id, params[:id])
   end
 end
