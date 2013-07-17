@@ -3,12 +3,18 @@
   #translation-target {
 
     .counter {
+      float: right;
       font-size: $small;
       text-align: right;
       color: $darkChameleon;
       &.tweet-limit-exausted {
         color: $darkScarletRed;
       }
+    }
+
+    .autosave {
+      font-size: $small;
+      color: $darkAluminium;
     }
 
   }

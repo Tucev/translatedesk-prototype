@@ -5,6 +5,8 @@ Translatedesk::Application.routes.draw do
     end
   end
 
+  resources :tweet_drafts
+
   devise_for :users
   root :to => "home#index"
   match "*page" => "home#index"

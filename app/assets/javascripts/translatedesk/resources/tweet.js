@@ -1,4 +1,3 @@
-var debug;
 // FIXME: Replace some methods by RESTFUL resources
 angular.module('translatedesk.resources').factory('Tweet', ['$http', function($http) {
 
