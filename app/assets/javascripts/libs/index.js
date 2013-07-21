@@ -5,3 +5,4 @@
 //= require ./angular/angular-cookies
 //= require ./angular-strap/angular-strap
 //= require ./moment
+//= require ./bootstrap.min

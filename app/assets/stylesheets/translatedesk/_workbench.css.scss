@@ -2,11 +2,22 @@
 
   #translation-target {
 
+    form {
+      margin: 0;
+    }
+
+    .counter, .autosave, .mt {
+      padding: 0;
+      margin: 0;
+      line-height: 23px; 
+    }
+
     .counter {
       float: right;
       font-size: $small;
       text-align: right;
       color: $darkChameleon;
+      margin-left: $unit; 
       &.tweet-limit-exausted {
         color: $darkScarletRed;
       }
@@ -14,7 +25,38 @@
 
     .autosave {
       font-size: $small;
+      float: left;
       color: $darkAluminium;
+    }
+
+    .mt {
+      float: right;
+
+      .dropdown-menu {
+        padding: $unit;
+
+        .dropdown-menu-inner {
+          display: table;
+        }
+
+        li {
+          display: table-row;
+
+          label, select {
+            display: table-cell;
+            font-size: $small;
+          }
+
+          label {
+            padding-right: $unit / 2;
+            text-align: right;
+          }
+        }
+      }
+    }
+
+    .workbench-form-footer {
+      clear: both;
     }
 
   }
