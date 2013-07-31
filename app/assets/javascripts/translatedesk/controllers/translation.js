@@ -1,13 +1,16 @@
 //
-angular.module('translatedesk.controllers').controller('TranslationController', ['$scope', '$location', '$timeout', 'Tweet', 'TweetDraft', function($scope, $location, $timeout, Tweet, TweetDraft) {
+angular.module('translatedesk.controllers').controller('TranslationController', ['$scope', '$location', '$timeout', 'Tweet', 'TweetDraft', 'MachineTranslation', function($scope, $location, $timeout, Tweet, TweetDraft, MachineTranslation) {
 
   $scope.workbench = Tweet.workbench;
-  
+
+  // Some tweet was picked for translation  
   $scope.prepareTranslation = function(t) {
 
     if (!t) {
       return false;
     }
+
+    $scope.originalTweet = t;
 
     // Try to load a saved draft first
     TweetDraft.prototype.$get(t.id)
@@ -45,6 +48,7 @@ angular.module('translatedesk.controllers').controller('TranslationController', 
     $scope.translatedTweet = text;
   };
 
+  // Save a draft automatically
   $scope.lastSave = {
     text : '',
     time : null,
@@ -69,6 +73,54 @@ angular.module('translatedesk.controllers').controller('TranslationController', 
     }
     if ($scope.lastSave.time) {
       $scope.lastSave.ago = moment($scope.lastSave.time).fromNow();
+    }
+  };
+
+  // Machine translation: translate using a machine translator, like Google Translate or Bing
+  // Populate languages available for machine translation (depends on the provider)
+  $scope.getMachineTranslators = function() {
+    if (!$scope.machineTranslators) {
+      MachineTranslation.prototype.$translators()
+      .success(function(data, status, headers, config) {
+        if (data) {
+          $scope.machineTranslators = data;
+        }
+      })
+      .error(function(data, status, headers, config) {
+        $scope.machineTranslationMessage = 'Could not get list of providers.';
+      });
+    }
+  };
+
+  $scope.machineTranslate = function() {
+    if (this.machineTranslator && this.sourceLanguage && this.targetLanguage) {
+      if (confirm('The machine translation will replace the current translated text on the field above. Continue?')) {
+        $scope.machineTranslationMessage = 'Translating...';
+        MachineTranslation.prototype.$translate(this.machineTranslator.name, this.sourceLanguage, this.targetLanguage, this.originalTweet.text)
+        .success(function(data, status, headers, config) {
+          if (data) {
+            $scope.translatedTweet = data.text;
+            $scope.machineTranslationMessage = 'Translated, see above.';
+          }
+        })
+        .error(function(data, status, headers, config) {
+          $scope.machineTranslationMessage = 'Could not translate.';
+        });
+      }
+    }
+  };
+
+  // When provider is changed, set the source language to be
+  // the tweet language and the target to be the user language
+  // if available and not set
+  $scope.selectMachineTranslator = function() {
+    if (!$scope.sourceLanguage && $scope.originalTweet.lang) {
+      $scope.sourceLanguage = $scope.originalTweet.lang;
+    }
+    // FIXME: It's better to get the language from the server, using header HTTP_ACCEPT_LANGUAGE
+    var language = window.navigator.userLanguage || window.navigator.language;
+    if (!$scope.targetLanguage && language) {
+      $scope.targetLanguage = language;
     }
   };
 

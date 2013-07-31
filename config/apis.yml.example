@@ -1,0 +1,36 @@
+# For Twitter, register an app at http://dev.twitter.com/apps
+# For Google Translate, you need to purchase a key
+# Copy this file to config/apis.yml
+
+development:
+  twitter:
+    consumer_key : 'your consumer key'
+    consumer_secret : 'your consumer secret'
+    oauth_token : 'your access token'
+    oauth_token_secret : 'your access token secret'
+  google_translate: 'your api key'
+  bing_translate:
+    client_id: 'your client id'
+    client_secret: 'your client secret'
+
+production:
+  twitter:
+    consumer_key : 'your consumer key'
+    consumer_secret : 'your consumer secret'
+    oauth_token : 'your access token'
+    oauth_token_secret : 'your access token secret'
+  google_translate: 'your api key'
+  bing_translate:
+    client_id: 'your client id'
+    client_secret: 'your client secret'
+
+test:
+  twitter:
+    consumer_key : 'your consumer key'
+    consumer_secret : 'your consumer secret'
+    oauth_token : 'your access token'
+    oauth_token_secret : 'your access token secret'
+  google_translate: 'your api key'
+  bing_translate:
+    client_id: 'your client id'
+    client_secret: 'your client secret'

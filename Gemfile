@@ -11,6 +11,9 @@ gem 'sass-rails', '~> 3.2.3'
 gem 'bootstrap-sass', '~> 2.1.0'
 gem 'twitter'
 gem 'sass'
+gem 'google_fish', :git => 'git://github.com/caiosba/google_fish.git'
+gem 'bing_translator', '~> 4.0.0'
+gem 'iso-639'
 
 #
 group :development do

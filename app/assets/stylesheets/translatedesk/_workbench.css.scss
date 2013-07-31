@@ -35,6 +35,10 @@
       .dropdown-menu {
         padding: $unit;
 
+        p {
+          text-align: center;
+        }
+
         .dropdown-menu-inner {
           display: table;
         }
@@ -52,6 +56,11 @@
             text-align: right;
           }
         }
+      }
+
+      .mt-message {
+        font-size: $small;
+        color: $darkSkyBlue;
       }
     }
 

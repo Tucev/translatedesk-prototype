@@ -4,5 +4,5 @@
 .bundle
 tmp
 config/database.yml
-config/twitter.yml
+config/apis.yml
 log
