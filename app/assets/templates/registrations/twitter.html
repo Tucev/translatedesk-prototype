@@ -1,0 +1,15 @@
+<h1>Sign up with Twitter</h1>
+<form ng-submit="create()">
+  <div class="message" ng-show="message" ng-init="message='Fill in your e-mail to complete your registration.'">{{message}}</div>
+  <div class="control-group">
+    <label class="control-label" for="email">E-mail</label>
+    <div class="controls">
+      <input type="email" id="email" name="email" placeholder="Email" ng-model="registration.email" ng-minlength="2" required>
+    </div>
+    </div>
+    <div class="control-group">
+      <div class="controls">
+        <button type="submit" class="btn">Sign up</button>
+      </div>
+  </div>
+</form>

@@ -2,14 +2,16 @@
 angular.module('translatedesk.controllers').controller('SessionsController', ['$scope', '$location', '$cookieStore', 'Session', function($scope, $location, $cookieStore, Session) {
   
   $scope.session = Session.userSession;
-  $scope.isLoggedIn = Session.signedIn;
+  $scope.signed = Session.signed;
+  $scope.currentUser = Session.currentUser;
 
   $scope.create = function() {
-    if (!$scope.isLoggedIn) {
+    if (!$scope.signed.in) {
       $scope.session.$save()
       .success(function(data, status, headers, config) {
         $cookieStore.put('_angular_devise_user', data);
-        $scope.isLoggedIn = true;
+        $scope.currentUser.data = data;
+        $scope.signed.in = true;
         $scope.message = 'Logged in successfully';
       })
       .error(function(data, status, headers, config) {
@@ -24,7 +26,7 @@ angular.module('translatedesk.controllers').controller('SessionsController', ['$
   $scope.destroy = function() {
     $scope.session.$destroy()
     .success(function(data, status, headers, config) {
-      $scope.isLoggedIn = false;
+      $scope.signed.in = false;
       $scope.message = 'Logged out';
     })
     .error(function(data, status, headers, config) {

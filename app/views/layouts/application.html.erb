@@ -26,17 +26,20 @@
           <ul class="nav">
             <li data-match-route="/(:?home)"><a href="/home">Home</a></li>
           </ul>
-          <div class="user" ng-switch="isLoggedIn" ng-controller="SessionsController">
+          <div class="user" ng-switch="signed.in" ng-controller="SessionsController" ng-init="signed.in = <%= user_signed_in? %>; currentUser.data = <%= current_user.to_json %>">
             <div class="user-logged-in" ng-switch-when="true">
+              <span>Hello, {{currentUser.data.name}}</span> 
               <button ng-click="destroy()" class="btn">Logout</button>
+              <span class="message" ng-show="message" ng-init="message='<%= flash.notice %>'">{{message}}</span>
             </div>
             <div class="user-logged-out" ng-switch-when="false">
               <form ng-submit="create()">
                 <input type="email" id="email" name="email" placeholder="Email" ng-model="session.email" ng-minlength="2" required>
                 <input type="password" id="password" name="password" placeholder="Password" ng-model="session.password" ng-minlength="2" password-validate required>
                 <button type="submit" class="btn">Login</button>
-                <a href="/register">Sign up</a>
-                <span class="message" ng-show="message">{{message}}</span>
+                <a href="/register">Sign up</a> | 
+                <span class="icon-twitter"></span> <%= link_to 'Sign in with Twitter', user_omniauth_authorize_path(:twitter), { :id => 'twitter-signin', :target => '_self' } %>
+                <span class="message" ng-show="message" ng-init="message='<%= flash.notice %>'">{{message}}</span>
               </form>
             </div>
           </div>

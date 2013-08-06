@@ -33,6 +33,7 @@ angular.module('translatedesk.resources').factory('UserRegistration', ['$http', 
   UserRegistration.prototype.$save = function() {
     return $http.post('/users', {
       "user" : {
+        "name" : this.name,
         "email" : this.email,
         "password" : this.password,
         "password_confirmation" : this.password_confirmation

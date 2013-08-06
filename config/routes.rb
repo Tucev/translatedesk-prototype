@@ -14,7 +14,7 @@ Translatedesk::Application.routes.draw do
 
   resources :tweet_drafts
 
-  devise_for :users
+  devise_for :users, :controllers => { :omniauth_callbacks => 'omniauth_callbacks' }
 
   root :to => "home#index"
   match "*page" => "home#index"
