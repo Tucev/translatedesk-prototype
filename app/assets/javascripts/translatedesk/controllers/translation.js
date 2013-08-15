@@ -155,6 +155,7 @@ angular.module('translatedesk.controllers').controller('TranslationController', 
     .success(function(data, status, headers, config) {
       if (data && data.twitter_url) {
         $scope.translations.push(data);
+        $scope.lastSave.ago = null;
         $scope.publishingMessage = 'Tweet published! <a href="' + data.twitter_url + '" target="_blank">See it on Twitter!</a>';
       }
       else if (data && data.error) {
