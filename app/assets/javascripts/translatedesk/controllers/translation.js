@@ -16,7 +16,7 @@ angular.module('translatedesk.controllers').controller('TranslationController', 
     TweetDraft.prototype.$get(t.id_str)
     .success(function(data, status, headers, config) {
       if (data.text) {
-        $scope.translatedTweet = data.text; 
+        $scope.translatedTweet = $scope.lastSave.text = data.text; 
       }
       else {
         // Pre-populate the new translation, if no draft is found

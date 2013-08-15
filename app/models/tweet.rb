@@ -15,6 +15,7 @@ class Tweet < ActiveRecord::Base
   before_validation :generate_uuid, :on => :create
   before_validation :preprocess_tweet, :on => :create
   before_validation :publish_on_twitter, :on => :create
+  after_create :remove_draft
 
   # Fetch tweets from Twitter
   def self.fetch(query = '', options = {})
@@ -118,6 +119,10 @@ class Tweet < ActiveRecord::Base
     client = Twitter::Client.new
     response = client.update(self.truncated_text, { :in_reply_to_status_id => self.original_tweet_id })
     self.published_tweet_id = response.id.to_s
+  end
+
+  def remove_draft
+    TweetDraft.destroy_all :user_id => self.user_id, :original_tweet_id => self.original_tweet_id
   end
 
 end

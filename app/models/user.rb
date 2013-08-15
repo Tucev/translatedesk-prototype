@@ -1,5 +1,8 @@
 class User < ActiveRecord::Base
 
+  has_many :tweets, :dependent => :destroy
+  has_many :tweet_drafts, :dependent => :destroy
+
   # Include default devise modules
   devise :database_authenticatable, :registerable, :omniauthable,
          :recoverable, :rememberable, :trackable, :validatable
