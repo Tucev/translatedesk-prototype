@@ -1,9 +1,28 @@
 #translation-workbench {
 
   #translation-target {
+    position: relative;
+    padding-bottom: $unit * 5;
 
     form {
       margin: 0;
+
+      .publish {
+        position: absolute;
+        bottom: $unit;
+        margin: 0;
+        text-align: center;
+        width: 100%;
+
+        span, span a {
+          font-size: $small;
+          color: $darkSkyBlue;
+        }
+
+        span a {
+          text-decoration: underline;
+        }
+      }
     }
 
     .counter, .autosave, .mt {
@@ -18,6 +37,7 @@
       text-align: right;
       color: $darkChameleon;
       margin-left: $unit; 
+      margin-bottom: $unit;
       &.tweet-limit-exausted {
         color: $darkScarletRed;
       }
@@ -66,6 +86,40 @@
 
     .workbench-form-footer {
       clear: both;
+      border-top: 1px solid $grey;
+    }
+
+  }
+
+  #translations {
+
+    .tweet {
+      position: relative;
+      padding: $unit;
+
+      .translation-info {
+        color: $grey;
+
+        a {
+          color: $grey;
+          text-decoration: underline;
+        }
+      }
+
+      .translation-text {
+        color: $black;
+
+        span {
+          position: absolute;
+          bottom: 0;
+          right: $unit;
+          color: $grey;
+
+          a {
+            color: $grey; 
+          }
+        }
+      }
     }
 
   }

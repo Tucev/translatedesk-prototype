@@ -1,0 +1,14 @@
+#public-tweet {
+  width: 100%;
+  text-align: center;
+  font-size: $largest;
+}
+
+#public-tweet-footer {
+  text-align: right;
+  padding-right: $unit;
+  
+  a, i {
+    color: $darkGrey;
+  }
+}

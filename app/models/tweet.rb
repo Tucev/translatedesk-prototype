@@ -2,6 +2,20 @@ require 'twitter'
 
 class Tweet < ActiveRecord::Base
 
+  TWITTER_MAX_LENGTH = 140
+
+  belongs_to :user
+
+  attr_accessible :text, :original_tweet_id, :original_tweet_author, :source_language, :target_language, :user_id
+  attr_accessor :original_tweet_author
+
+  validates_presence_of :truncated_text, :original_tweet_id, :original_tweet_author, :text, :user_id 
+  validates_uniqueness_of :uuid
+
+  before_validation :generate_uuid, :on => :create
+  before_validation :preprocess_tweet, :on => :create
+  before_validation :publish_on_twitter, :on => :create
+
   # Fetch tweets from Twitter
   def self.fetch(query = '', options = {})
 
@@ -49,4 +63,61 @@ class Tweet < ActiveRecord::Base
       []
     end
   end
+
+  # Prepare a text for tweet
+  def self.truncate_text(text, author, url)
+    full_text = text =~ /^TT / ? text : 'TT ' + text
+    full_text = full_text =~ /^TT @#{author} / ? full_text : full_text.gsub(/^TT /, 'TT @' + author + ' ')
+    full_text = full_text.truncate(TWITTER_MAX_LENGTH - url.length, :separator => ' ', :omission => '... ')
+    full_text + ' ' + url
+  end
+
+  # FIXME: Better if this is a named_scope?
+  def self.translations(status_id)
+    Tweet.all :conditions => { :original_tweet_id => status_id }
+  end
+
+  # Return URL for a tweet. Notice: this may change over time!
+  def twitter_url
+    self.published_tweet_id.present? ? 'https://twitter.com/statuses/' + self.published_tweet_id.to_s : ''
+  end
+
+  def target_language_readable
+    (entry = ISO_639.find(self.target_language)) ? entry.english_name : self.target_language
+  end
+
+  def as_json(options={})
+    super.as_json(options).merge({ :twitter_url => twitter_url, :author_name => user.name, :author_url => user.twitter_url, :target_language_readable => target_language_readable })
+  end
+
+  protected
+
+  def generate_uuid
+    begin
+      self.uuid = SecureRandom.uuid
+    end while self.class.exists?(:uuid => self.uuid)
+  end
+
+  def preprocess_tweet
+    if self.text.present?
+      # FIXME: Is there a better way to get the path/link in the model? Because we are breaking MVC here... also look for a better way to get the host
+      full_url = Rails.application.routes.url_helpers.tweet_path(self.uuid, :only_path => false, :host => TRANSLATEDESK_CONF['public_host'])
+      bitly = Bitly.new(BITLY['username'], BITLY['api_key'])
+      url = bitly.shorten(full_url, :history => 1)
+      self.truncated_text = Tweet.truncate_text(self.text, self.original_tweet_author, url.short_url)
+    end
+  end
+
+  def publish_on_twitter
+    Twitter.configure do |config|
+      config.consumer_key = TWITTER_CONF['consumer_key']
+      config.consumer_secret = TWITTER_CONF['consumer_secret']
+      config.oauth_token = self.user.twitter_oauth_token
+      config.oauth_token_secret = self.user.twitter_oauth_token_secret
+    end
+    client = Twitter::Client.new
+    response = client.update(self.truncated_text, { :in_reply_to_status_id => self.original_tweet_id })
+    self.published_tweet_id = response.id.to_s
+  end
+
 end

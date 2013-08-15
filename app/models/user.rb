@@ -7,11 +7,15 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :name, :email, :password, :password_confirmation, :remember_me
 
+  validates_presence_of :name
+
   def self.from_omniauth(auth)
     where(auth.slice(:provider, :uid)).first_or_create do |user|
       user.name = auth['info'].name
       user.provider = auth.provider
       user.uid = auth.uid
+      user.twitter_oauth_token = auth.credentials.token
+      user.twitter_oauth_token_secret = auth.credentials.secret
     end
   end
 
@@ -28,6 +32,10 @@ class User < ActiveRecord::Base
 
   def password_required?
     super && provider.blank?
+  end
+
+  def twitter_url
+    (self.provider == 'twitter' and self.uid.present?) ? 'https://twitter.com/account/redirect_by_id?id=' + self.uid.to_s : '' 
   end
 
 end

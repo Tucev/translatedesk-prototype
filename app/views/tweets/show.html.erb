@@ -1,0 +1,11 @@
+<!-- Public view of a tweet -->
+
+<div id="public-tweet">
+  <p id="public-tweet-text"><%= @tweet.text %></p> 
+  <p id="public-tweet-author">&mdash; <%= link_to @tweet.user.name, @tweet.user.twitter_url %></p>
+  <a href="<%= @tweet.twitter_url %>" data-datetime="<%= @tweet.created_at %>"></a>
+</div>
+
+<div id="public-tweet-footer">
+  <i class="icon-external-link"></i> <%= link_to 'See it on Twitter', @tweet.twitter_url %>
+</div>

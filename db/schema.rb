@@ -11,21 +11,54 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120920193543) do
+ActiveRecord::Schema.define(:version => 20130813011044) do
+
+  create_table "tweet_drafts", :force => true do |t|
+    t.integer  "user_id"
+    t.text     "text"
+    t.string   "original_tweet_id"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
+  add_index "tweet_drafts", ["user_id"], :name => "index_tweet_drafts_on_user_id"
+
+  create_table "tweets", :force => true do |t|
+    t.integer  "user_id"
+    t.text     "text"
+    t.text     "truncated_text"
+    t.string   "original_tweet_id"
+    t.string   "published_tweet_id"
+    t.string   "source_language"
+    t.string   "target_language"
+    t.string   "uuid"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
+
+  add_index "tweets", ["original_tweet_id"], :name => "index_tweets_on_original_tweet_id"
+  add_index "tweets", ["published_tweet_id"], :name => "index_tweets_on_published_tweet_id"
+  add_index "tweets", ["user_id"], :name => "index_tweets_on_user_id"
+  add_index "tweets", ["uuid"], :name => "index_tweets_on_uuid"
 
   create_table "users", :force => true do |t|
-    t.string   "email",                  :default => "", :null => false
-    t.string   "encrypted_password",     :default => "", :null => false
+    t.string   "email",                      :default => "", :null => false
+    t.string   "encrypted_password",         :default => "", :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          :default => 0
+    t.integer  "sign_in_count",              :default => 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
+    t.string   "provider"
+    t.string   "uid"
+    t.string   "name"
+    t.string   "twitter_oauth_token"
+    t.string   "twitter_oauth_token_secret"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

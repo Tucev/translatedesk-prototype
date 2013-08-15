@@ -3,6 +3,8 @@
 # Copy this file to config/apis.yml
 
 development:
+  translatedesk:
+    public_host: 'public host where this application is running'
   twitter:
     consumer_key : 'your consumer key'
     consumer_secret : 'your consumer secret'
@@ -12,8 +14,14 @@ development:
   bing_translate:
     client_id: 'your client id'
     client_secret: 'your client secret'
+  bitly:
+    username: 'your username'
+    api_key: 'your api key'
+    example: 'an example url to show on preview'
 
 production:
+  translatedesk:
+    public_host: 'public host where this application is running'
   twitter:
     consumer_key : 'your consumer key'
     consumer_secret : 'your consumer secret'
@@ -23,8 +31,14 @@ production:
   bing_translate:
     client_id: 'your client id'
     client_secret: 'your client secret'
+  bitly:
+    username: 'your username'
+    api_key: 'your api key'
+    example: 'an example url to show on preview'
 
 test:
+  translatedesk:
+    public_host: 'public host where this application is running'
   twitter:
     consumer_key : 'your consumer key'
     consumer_secret : 'your consumer secret'
@@ -34,3 +48,7 @@ test:
   bing_translate:
     client_id: 'your client id'
     client_secret: 'your client secret'
+  bitly:
+    username: 'your username'
+    api_key: 'your api key'
+    example: 'an example url to show on preview'

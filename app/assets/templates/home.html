@@ -57,8 +57,27 @@
     </div>
 
     <div id="translation-target" class="well">
-      <form>
+      <form ng-submit="publish()">
+
         <textarea ng-model="translatedTweet" ng-init="prepareTranslation(tweet)" ng-change="updateModel(translatedTweet)" class="span12"></textarea>
+
+        <div id="preview" class="modal hide fade in" style="display: none;">
+          <div class="modal-header">
+            <a class="close" data-dismiss="modal">X</a>
+            <h3>Preview</h3>
+          </div>
+          <div class="modal-body">
+            <p>{{previewContent}}</p>
+          </div>
+          <div class="modal-footer">
+            <a href="#" class="btn" data-dismiss="modal">Close</a>
+          </div>
+        </div>
+
+        <p class="publish">
+          <a class="btn btn-info" ng-click="preview()">Preview</a> 
+          <input type="submit" value="Publish" class="btn btn-primary" id="publish-tweet-button" /> <span ng-bind-html-unsafe="publishingMessage"></span>
+        </p>
       </form>
       <p class="counter" ng-class="{ 'tweet-limit-exausted' : translatedTweet.length > 140 }">{{140 - translatedTweet.length}}</p>
       <p class="autosave" ng-show="lastSave.ago">Draft saved {{lastSave.ago}}</p>
@@ -105,6 +124,16 @@
       </div>
 
       <div class="workbench-form-footer"></div>
+    </div>
+
+    <div id="translations">
+      <h5>Translations</h5>
+      <ul class="tweets">
+        <li class="tweet well well-small" ng-repeat="tweet in translations">
+          <p class="translation-info">Translated to {{tweet.target_language_readable}} by <a href="{{tweet.author_url}}" target="_blank">{{tweet.author_name}}</a> on {{tweet.created_at | date:'h:mma Z d MMM yy'}}</p>
+          <p class="translation-text">{{tweet.text}} <span><i class="icon-external-link"></i> <a href="{{tweet.twitter_url}}" target="_blank">See on Twitter</a></span></p>
+        </li>
+      </ul>
     </div>
 
   </div>

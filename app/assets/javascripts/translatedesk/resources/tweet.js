@@ -70,6 +70,33 @@ angular.module('translatedesk.resources').factory('Tweet', ['$http', function($h
     });
   };
 
+  Tweet.prototype.$publish = function(source_language, target_language, original_tweet_id, original_tweet_author, text) {
+    return $http.post('/tweets', {
+      source_language : source_language,
+      target_language : target_language,
+      original_tweet_id : original_tweet_id,
+      original_tweet_author : original_tweet_author,
+      text : text
+    });
+  };
+
+  Tweet.prototype.$preview = function(text, author) {
+    return $http.get('/tweets/preview', {
+      params : { 
+        text : text,
+        author : author
+      }
+    });
+  };
+
+  Tweet.prototype.$translations = function(status_id) {
+    return $http.get('/tweets/translations', {
+      params : { 
+        status_id : status_id
+      }
+    });
+  };
+
   // The tweet the user is working on right now
   Tweet.workbench = { source : null };
 
