@@ -6,15 +6,16 @@ Written in Ruby On Rails 3 (Ruby 1.9) + AngularJS.
 
 * Run `bundle install` to install missing gems
 * Copy config/database.yml.example to config/database.yml and configure you database
-* Copy config/twitter.yml.example to config/twitter.yml and configure you Twitter application settings
+* Copy config/apis.yml.example to config/apis.yml and configure all APIs
 * Run `rake db:migrate` to create the tables in the database
 * Start the server: `rails s`
 * Open http://localhost:3000 in your browser
+* Check the documention under doc/, which can also be updated by running `rake diagram:all` (uses railroady gem)
 
-### TODO:
+### TODO
 * Automated tests
-* l10n / i18n
-* Pluralize strings
+* RDOC
+* l10n / i18n / pluralization
 * Fix FIXMEs
 
 ### Deployment with Ubuntu 12.04 + Ruby 1.9 + Apache + Passenger
