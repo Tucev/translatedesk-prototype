@@ -11,3 +11,20 @@ body {
 p, ul, ol, table, pre, dl {
   margin:0 0 20px;
 }
+
+div.logo {
+  margin-top: 4em;
+}
+
+a {  }
+
+p.quote {
+  width: 80%;
+  font-size: 2em;
+  margin: 4em auto;
+}
+
+.attribution {
+  display: block;
+  margin: 0 auto;
+}
