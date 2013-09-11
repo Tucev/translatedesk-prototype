@@ -41,4 +41,12 @@ class User < ActiveRecord::Base
     (self.provider == 'twitter' and self.uid.present?) ? 'https://twitter.com/account/redirect_by_id?id=' + self.uid.to_s : '' 
   end
 
+  # Do not output sensible attributes, like passwords or tokens
+  def as_json(options = {})
+    {
+      name: self.name,
+      email: self.email
+    }
+  end
+
 end

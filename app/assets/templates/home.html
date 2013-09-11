@@ -71,12 +71,12 @@
           </div>
           <div class="modal-footer">
             <a href="#" class="btn" data-dismiss="modal">Close</a>
+            <input type="submit" value="Publish" class="btn btn-primary" id="publish-tweet-button" /> <span ng-bind-html-unsafe="publishingMessage"></span>
           </div>
         </div>
 
         <p class="publish">
-          <a class="btn btn-info" ng-click="preview()">Preview</a> 
-          <input type="submit" value="Publish" class="btn btn-primary" id="publish-tweet-button" /> <span ng-bind-html-unsafe="publishingMessage"></span>
+          <a class="btn btn-info" ng-click="preview()">Preview & Publish</a> 
         </p>
       </form>
       <p class="counter" ng-class="{ 'tweet-limit-exausted' : translatedTweet.length > 140 }">{{140 - translatedTweet.length}}</p>

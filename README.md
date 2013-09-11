@@ -16,7 +16,7 @@ Written in Ruby On Rails 3 (Ruby 1.9) + AngularJS.
 * Automated tests
 * RDOC
 * l10n / i18n / pluralization
-* Fix FIXMEs
+* Fix FIXMEs: `grep -r FIXME app/*`
 
 ### Deployment with Ubuntu 12.04 + Ruby 1.9 + Apache + Passenger
 

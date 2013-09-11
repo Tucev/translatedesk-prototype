@@ -12,6 +12,16 @@ postgresql: &postgresql
   username: angular
   password: password
 
+# Check: http://donpark.org/blog/2013/02/16/rails-3-2-12-not-ready-for-mysql-5-5-utf8mb4
+mysql: &mysql
+  adapter: mysql
+  pool: 5
+  username: username
+  password: password
+  database: database
+  encoding: utf8mb4 # Important for Chinese characters (MySQL 5.5+ only)
+  collation: utf8mb4_unicode_ci # Important for Chinese characters (MySQL 5.5+ only)
+
 test:
   <<: *sqlite
   database: tmp/dbs/angular_devise_test.db
@@ -21,5 +31,5 @@ development:
   database: tmp/dbs/angular_devise_development.db
 
 production:
-  <<: *postgresql
+  <<: *mysql
   database: angular_devise_production

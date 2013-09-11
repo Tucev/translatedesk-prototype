@@ -11,6 +11,7 @@ angular.module('translatedesk.controllers').controller('TranslationController', 
     }
 
     $scope.originalTweet = t;
+    $scope.publishingMessage = ''; 
 
     // Try to load a saved draft first
     TweetDraft.prototype.$get(t.id_str)
@@ -103,18 +104,20 @@ angular.module('translatedesk.controllers').controller('TranslationController', 
   };
 
   $scope.machineTranslate = function() {
-    if (this.machineTranslator && this.sourceLanguage && this.targetLanguage) {
+    var that = this;
+    if (that.machineTranslator && that.sourceLanguage && that.targetLanguage) {
       if (confirm('The machine translation will replace the current translated text on the field above. Continue?')) {
-        $scope.machineTranslationMessage = 'Translating...';
-        MachineTranslation.prototype.$translate(this.machineTranslator.name, this.sourceLanguage, this.targetLanguage, this.originalTweet.text)
+        that.machineTranslationMessage = 'Translating...';
+        MachineTranslation.prototype.$translate(that.machineTranslator.name, that.sourceLanguage, that.targetLanguage, that.originalTweet.text)
         .success(function(data, status, headers, config) {
           if (data) {
-            $scope.translatedTweet = data.text;
-            $scope.machineTranslationMessage = 'Translated, see above.';
+            // FIXME: We need these two-assignments because otherwise two-way binding doesn't work... why?
+            $scope.translatedTweet = that.translatedTweet = data.text;
+            that.machineTranslationMessage = 'Translated, see above.';
           }
         })
         .error(function(data, status, headers, config) {
-          $scope.machineTranslationMessage = 'Could not translate.';
+          that.machineTranslationMessage = 'Could not translate.';
         });
       }
     }

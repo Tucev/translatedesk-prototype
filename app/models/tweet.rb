@@ -83,6 +83,11 @@ class Tweet < ActiveRecord::Base
     self.published_tweet_id.present? ? 'https://twitter.com/statuses/' + self.published_tweet_id.to_s : ''
   end
 
+  # Return URL for a tweet from the API. Notice: this may change over time!
+  def api_twitter_url
+    self.original_tweet_id.present? ? 'https://twitter.com/twitterapi/status/' + self.original_tweet_id.to_s : ''
+  end
+
   def target_language_readable
     (entry = ISO_639.find(self.target_language)) ? entry.english_name : self.target_language
   end

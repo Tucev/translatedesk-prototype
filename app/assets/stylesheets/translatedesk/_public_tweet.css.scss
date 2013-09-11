@@ -1,14 +1,43 @@
 #public-tweet {
-  width: 100%;
+  width: 50 * $unit;
   text-align: center;
-  font-size: $largest;
-}
+  font-size: $huge;
+  margin: 0 auto;
+  line-height: $defaultLineHeight;
 
-#public-tweet-footer {
-  text-align: right;
-  padding-right: $unit;
-  
-  a, i {
-    color: $darkGrey;
+  article {
+    position: relative;
   }
+
+  .translated-to {
+    display: inline-block;
+    text-indent: -5000em;
+    width: 64px;
+    height: 64px;
+    background: transparent image-url('translated.png') center center no-repeat;
+    position: absolute;
+    left: -40px;
+    top: -40px;
+    z-index: 1;
+  }
+
+  #public-tweet-text {
+    text-align: left;
+  }
+
+  #public-tweet-author {
+    text-align: right;
+    font-size: $large;
+  }
+
+  footer {
+    font-size: $large;
+    text-align: right;
+    padding-right: $unit;
+    
+    a, i {
+      color: $darkGrey;
+    }
+  }
+
 }

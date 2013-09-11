@@ -21,7 +21,7 @@ FIXME: Evaluate if rich view is better than a custom template, like we do below
         <li><span>{{tweet.retweet_count}}</span> retweets</li>
         <li><span>{{tweet.favorite_count}}</span> favorites</li>
         <li><span>{{tweet.popularity}}</span> popularity</li>
-        <li ng-show="tweet.distance"><span>{{tweet.distance}}</span> km of distance</li>
+        <li ng-show="tweet.distance"><span>{{tweet.distance}}</span> km from your current location</li>
       </ul>
 
       <a class="tweet-view-media" ng-click="tweet.viewMedia = true" ng-show="tweet.media_count && !tweet.viewMedia">&raquo; View attached media</a>
