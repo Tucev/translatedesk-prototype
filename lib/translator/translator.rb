@@ -1,7 +1,7 @@
 module Translator
 
   # Same as the class name
-  PROVIDERS = ['GoogleTranslate', 'Bing']
+  PROVIDERS = ['GoogleTranslate', 'Bing', 'Phrasal']
 
   def self.const_missing(c)
     Object.const_get(c)
