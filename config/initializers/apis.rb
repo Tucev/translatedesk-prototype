@@ -29,3 +29,7 @@ BING_CLIENT_SECRET = APIS_CONF['bing_translate']['client_secret']
 # Bit.ly
 
 BITLY = APIS_CONF['bitly']
+
+# Facebook
+
+FACEBOOK_CONF = APIS_CONF['facebook']

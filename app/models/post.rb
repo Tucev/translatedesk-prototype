@@ -1,7 +1,8 @@
 class Post < ActiveRecord::Base
 
   PROVIDERS = {
-    :twitter => Tweet
+    :twitter => Tweet,
+    :facebook => FacebookPost
   }
 
   belongs_to :user

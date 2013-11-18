@@ -14,7 +14,9 @@ gem 'sass'
 gem 'google_fish', :git => 'git://github.com/caiosba/google_fish.git'
 gem 'bing_translator', '~> 4.0.0'
 gem 'iso-639'
+gem 'omniauth'
 gem 'omniauth-twitter'
+gem 'omniauth-facebook'
 gem 'bitly'
 
 #

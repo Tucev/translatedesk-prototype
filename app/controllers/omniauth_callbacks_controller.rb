@@ -12,4 +12,5 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   # It's possible to add new providers here (Facebook, etc.)
   alias_method :twitter, :all
+  alias_method :facebook, :all
 end
