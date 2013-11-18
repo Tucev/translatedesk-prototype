@@ -1,5 +1,5 @@
 //
-angular.module('translatedesk.controllers').controller('PublishController', ['$scope', '$location', 'Post', function($scope, $location, Post) {
+angular.module('translatedesk.controllers').controller('PublishController', ['$scope', '$location', '$window', 'Post', function($scope, $location, $window, Post) {
 
   $scope.posts = [];
   $scope.sortCriteria = 'popularity';
@@ -43,6 +43,7 @@ angular.module('translatedesk.controllers').controller('PublishController', ['$s
 
   $scope.translate = function(p) {
     $scope.workbench.source = p;
+    $window.scrollTo(0, 0);
   };
 
   $scope.filterTemplateUrl = function() {
