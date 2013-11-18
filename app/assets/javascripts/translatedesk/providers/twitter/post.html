@@ -1,0 +1,50 @@
+<!-- Uncomment to enable rich view
+FIXME: Evaluate if rich view is better than a custom template, like we do below
+<blockquote class="twitter-post">
+  <p>{{post.text}}</p> &mdash; {{post.user.name}} (@{{post.user.screen_name}})
+  <a href="https://twitter.com/{{post.user.screen_name}}/status/{{post.id_str}}" data-datetime="{{post.created_at}}"></a>
+  <script src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+</blockquote>
+-->
+<div class="post" ng-controller="PublishController">
+
+  <div class="post-body">
+    <img class="post-profile-image" src="{{post.user.profile_image_url}}" alt="" />
+
+    <div class="post-content">
+      <p>
+        <span class="post-user">{{post.user.name}} (@{{post.user.screen_name}})</span> 
+        <span class="post-text">{{post.text}}</span>
+      </p>
+
+      <ul class="post-stats">
+        <li><span>{{post.retweet_count}}</span> retweets</li>
+        <li><span>{{post.favorite_count}}</span> favorites</li>
+        <li><span>{{post.popularity}}</span> popularity</li>
+        <li ng-show="post.distance"><span>{{post.distance}}</span> km from your current location</li>
+      </ul>
+
+      <a class="post-view-media" ng-click="post.viewMedia = true" ng-show="post.media_count && !post.viewMedia">&raquo; View attached media</a>
+      <div class="post-media" ng-show="post.viewMedia">
+        <img ng-src="{{post.entities.media[0].media_url}}" />
+      </div>
+
+      <a class="post-load-conversation" ng-click="loadConversation(post)" ng-show="post.in_reply_to_status_id && !post.conversation">&raquo; View full conversation</a>
+      <ul class="post-conversation">
+        <li ng-repeat="reply in post.conversation">
+          <span class="post-user">{{reply.user.name}} (@{{reply.user.screen_name}})</span> 
+          <span class="post-text">{{reply.text}}</span> 
+          <span data-datetime="{{reply.created_at}}" class="post-date">{{reply.created_at | date:'h:mma Z d MMM yy'}}</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="post-actions">
+      <span data-datetime="{{post.created_at}}" class="post-date">{{post.created_at | date:'h:mma Z d MMM yy'}}</span> 
+      <a ng-click="translate(post)" ng-hide="post == workbench.source">translate &raquo;</a>
+    </div>
+  </div>
+
+  <div class="post-footer"></div>
+
+</div>

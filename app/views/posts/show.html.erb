@@ -1,0 +1,20 @@
+<!-- Public view of a post -->
+
+<div id="public-post" class="panel panel-info">
+
+  <header class="well well-lg" id="original-post">
+    <%= @post.original_text %>
+  </header>
+
+  <article class="well well-lg">
+    <span class="translated-to">Translated to...</span>
+    <p id="public-post-text"><%= @post.text %></p> 
+    <p id="public-post-author"><%= ('Translated by %s' % @post.user.name).html_safe %></p>
+    <a href="<%= @post.published_url %>" data-datetime="<%= @post.created_at %>"></a>
+  </article>
+
+  <footer class="panel-footer">
+    <i class="icon-external-link"></i> <%= link_to 'See it online', @post.published_url %>
+  </footer>
+
+</div>

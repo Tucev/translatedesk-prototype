@@ -1,8 +1,8 @@
-.tweets {
+.posts {
   margin: 0;
 }
 
-.tweet {
+.post {
   list-style: none;
   background: $white;
   padding: $unit / 2;
@@ -11,26 +11,26 @@
   font-size: $medium;
   @include rounded-corners($unit/2);
 
-  .tweet-profile-image,
-  .tweet-content {
+  .post-profile-image,
+  .post-content {
     float: left;
   }
 
-  .tweet-profile-image {
+  .post-profile-image {
     width: 10%;
   }
 
-  .tweet-content {
+  .post-content {
     width: 65%;
     padding: 0 $unit/2;
     color: $black;
 
-    .tweet-user {
+    .post-user {
       color: $darkSkyBlue; 
     }
   }
 
-  .tweet-stats {
+  .post-stats {
     margin: 0;
     margin-bottom: $unit;
 
@@ -47,36 +47,36 @@
     }
   }
 
-  .tweet-media, .tweet-load-conversation, .tweet-conversation, .tweet-view-media {
+  .post-media, .post-load-conversation, .post-conversation, .post-view-media {
     clear: both;
   }
 
-  .tweet-media img {
+  .post-media img {
     margin-top: $unit;
   }
 
-  .tweet-load-conversation, .tweet-view-media {
+  .post-load-conversation, .post-view-media {
     margin: $unit 0;
     display: block;
   }
 
-  .tweet-actions {
+  .post-actions {
     float: right;
     width: 15%;
     padding-right: $unit/2;
     font-size: $small;
   }
 
-  .tweet-footer {
+  .post-footer {
     clear: both;
   }
 
-  .tweet-date {
+  .post-date {
     color: $darkAluminium;
     display: block;
   }
 
-  .tweet-conversation {
+  .post-conversation {
     margin: 0;
     margin-top: $unit;
 

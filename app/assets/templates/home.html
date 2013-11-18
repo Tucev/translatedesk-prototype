@@ -1,10 +1,11 @@
-<div id="translator-request-queue" class="span4" ng-controller="TwitterController">
+<div id="translator-request-queue" class="span4" ng-controller="PublishController">
   <div class="well">
     <h5>Translator Request Queue</h5>
     <form ng-submit="fetch()">
-      <div class="searchbox controls controls-row input-append">
-        <input type="text" class="span9" ng-model="tweetQuery" placeholder="Keywork, #hashtag or @username">
-        <button class="btn">Search</button>
+      <div class="searchbox controls controls-row input-append span12">
+        <select ng-model="workbench.provider" class="span3" ng-options="p.name for (id, p) in workbench.providers"></select>
+        <input type="text" class="span6" ng-model="postQuery" placeholder="Keyword, #hashtag or @username">
+        <button class="btn span3">Search</button>
       </div>
 
       <label>Sort by</label>
@@ -21,7 +22,7 @@
       </select>
 
       <label>Limit</label>
-      <select ng-model="searchLimit" ng-change="tweets.length && fetch()" class="span12">
+      <select ng-model="searchLimit" ng-change="posts.length && fetch()" class="span12">
         <option value="10">10</option>
         <option value="20">20</option>
         <option value="50">50</option>
@@ -29,19 +30,12 @@
       </select>
 
       <label>Filters</label>
-      <ul class="filters">
-        <li><input type="checkbox" ng-model="filter.in_reply_to_status_id" /> contains @reply</li>
-        <li><input type="checkbox" ng-model="filter.is_not_reply" /> no @reply</li>
-        <li><input type="checkbox" ng-model="filter.retweeted_status" /> contains "RT"</li>
-        <li><input type="checkbox" ng-model="filter.media_count" /> contains image</li>
-        <li><input type="checkbox" ng-model="filter.urls_count" /> contains link</li>
-        <li><input type="checkbox" ng-model="filter.distance" /> contains location</li>
-      </ul>
+      <div ng-include="filterTemplateUrl()"></div>
     </form>
     <div class="message" ng-show="message">{{message}}</div>
-    <h5 class="results-count" ng-show="(tweets | filter:filterQueue).length">There are {{(tweets | filter:filterQueue).length}} tweets.</h5>
-    <ul class="tweets">
-      <li class="tweet" ng-repeat="tweet in tweets | orderBy:sortQueue:sortOrder | filter:filterQueue" ng-include="'/assets/tweet.html'"></li>
+    <h5 class="results-count" ng-show="(posts | filter:filterQueue).length">There are {{(posts | filter:filterQueue).length}} posts.</h5>
+    <ul class="posts">
+      <li class="post" ng-repeat="post in posts | orderBy:sortQueue:sortOrder | filter:filterQueue" ng-include="postTemplateUrl()"></li>
     </ul>
   </div>
 </div>
@@ -50,16 +44,16 @@
   <h5>Translation Workbench</h5>
   
   <!-- FIXME: Is there a way to bind variables instead of using ng-repeat? -->
-  <div class="translation-workbench-inner" ng-show="workbench.source" ng-repeat="tweet in [workbench.source]">
+  <div class="translation-workbench-inner" ng-show="workbench.source" ng-repeat="post in [workbench.source]">
 
     <div id="translation-source" class="well">
-      <div ng-include="'/assets/tweet.html'"></div>
+      <div ng-include="postTemplateUrl()"></div>
     </div>
 
     <div id="translation-target" class="well">
       <form ng-submit="publish()">
 
-        <textarea ng-model="translatedTweet" ng-init="prepareTranslation(tweet)" ng-change="updateModel(translatedTweet)" class="span12"></textarea>
+        <textarea ng-model="translatedPost" ng-init="prepareTranslation(post)" ng-change="updateModel(translatedPost)" class="span12"></textarea>
 
         <div id="preview" class="modal hide fade in" style="display: none;">
           <div class="modal-header">
@@ -71,15 +65,15 @@
           </div>
           <div class="modal-footer">
             <a href="#" class="btn" data-dismiss="modal">Close</a>
-            <input type="submit" value="Publish" class="btn btn-primary" id="publish-tweet-button" /> <span ng-bind-html-unsafe="publishingMessage"></span>
+            <input type="submit" value="Publish" class="btn btn-primary" id="publish-post-button" /> <span ng-bind-html-unsafe="publishingMessage"></span>
           </div>
         </div>
 
         <p class="publish">
-          <a class="btn btn-info" ng-click="preview()">Preview & Publish</a> 
+          <a class="btn btn-info" ng-click="preview()">Preview &amp; Publish</a> 
         </p>
       </form>
-      <p class="counter" ng-class="{ 'tweet-limit-exausted' : translatedTweet.length > 140 }">{{140 - translatedTweet.length}}</p>
+      <p class="counter" ng-class="{ 'post-limit-exausted' : translatedPost.length > workbench.provider.charsLimit }">{{workbench.provider.charsLimit - translatedPost.length}}</p>
       <p class="autosave" ng-show="lastSave.ago">Draft saved {{lastSave.ago}}</p>
 
       <div class="btn-group open mt">
@@ -128,10 +122,10 @@
 
     <div id="translations">
       <h5>Translations</h5>
-      <ul class="tweets">
-        <li class="tweet well well-small" ng-repeat="tweet in translations">
-          <p class="translation-info">Translated to {{tweet.target_language_readable}} by <a href="{{tweet.author_url}}" target="_blank">{{tweet.author_name}}</a> on {{tweet.created_at | date:'h:mma Z d MMM yy'}}</p>
-          <p class="translation-text">{{tweet.text}} <span><i class="icon-external-link"></i> <a href="{{tweet.twitter_url}}" target="_blank">See on Twitter</a></span></p>
+      <ul class="posts">
+        <li class="post well well-small" ng-repeat="post in translations">
+          <p class="translation-info">Translated to {{post.target_language_readable}} by {{post.author_name}} on {{post.created_at | date:'h:mma Z d MMM yy'}}</p>
+          <p class="translation-text">{{post.text}} <span><i class="icon-external-link"></i> <a href="{{post.published_url}}" target="_blank">See online</a></span></p>
         </li>
       </ul>
     </div>

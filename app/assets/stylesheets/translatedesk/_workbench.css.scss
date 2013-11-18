@@ -38,7 +38,7 @@
       color: $darkChameleon;
       margin-left: $unit; 
       margin-bottom: $unit;
-      &.tweet-limit-exausted {
+      &.post-limit-exausted {
         color: $darkScarletRed;
       }
     }
@@ -93,7 +93,7 @@
 
   #translations {
 
-    .tweet {
+    .post {
       position: relative;
       padding: $unit;
 

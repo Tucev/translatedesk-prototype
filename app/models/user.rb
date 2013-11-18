@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
 
-  has_many :tweets, :dependent => :destroy
-  has_many :tweet_drafts, :dependent => :destroy
+  has_many :posts, :dependent => :destroy
+  has_many :post_drafts, :dependent => :destroy
 
   # Include default devise modules
   devise :database_authenticatable, :registerable, :omniauthable,
@@ -17,8 +17,10 @@ class User < ActiveRecord::Base
       user.name = auth['info'].name
       user.provider = auth.provider
       user.uid = auth.uid
-      user.twitter_oauth_token = auth.credentials.token
-      user.twitter_oauth_token_secret = auth.credentials.secret
+      if auth.provider == 'twitter'
+        user.twitter_oauth_token = auth.credentials.token
+        user.twitter_oauth_token_secret = auth.credentials.secret
+      end
     end
   end
 

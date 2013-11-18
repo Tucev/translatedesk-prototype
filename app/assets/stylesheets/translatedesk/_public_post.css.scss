@@ -1,4 +1,4 @@
-#public-tweet {
+#public-post {
   width: 50 * $unit;
   text-align: center;
   font-size: $huge;
@@ -21,11 +21,11 @@
     z-index: 1;
   }
 
-  #public-tweet-text {
+  #public-post-text, #original-post {
     text-align: left;
   }
 
-  #public-tweet-author {
+  #public-post-author {
     text-align: right;
     font-size: $large;
   }

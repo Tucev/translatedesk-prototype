@@ -51,3 +51,26 @@ Written in Ruby On Rails 3 (Ruby 1.9) + AngularJS.
   ```
 
 * Execute the four first steps of the application installation above
+
+### Extending the application
+
+You can extend Translatedesk by implementing support to a new provider or machine translator.
+
+#### Adding a new machine translator
+
+* Add the class name to Translator::PROVIDERS
+* Implement a class on lib/translator/name.rb which needs to have at least two methods: translate (which receives a text, source language code, target language code and a hash of additional options and returns the translated text) and languages (which receives an optional target and hash of options and returns the list of supported languages as codes)
+* If the new machine translator requires API keys, add the examples to config/apis.yml.example 
+
+Just it. The new machine translator will be available magically on the UI.
+
+#### Adding a new provider
+
+Translatedesk comes with support to Twitter. If you want to give support to another provider, here are the steps (first, you need to think about a unique identifier for it, ideally only letters in lower case, and the provider must be supported on OnmiAuth):
+
+* Add a new provider to omniauth_callbacks_controller.rb, so the user can login through this new provider
+* On the AngularJS layer, implement a new provider on app/assets/javascripts/translatedesk/providers, check the Twitter one as example
+* On the backend, implement a new model on app/models/, that inherits from the Post model
+* Add new entry on Post::PROVIDERS (the key is the identifier and the value is the model)
+* If the new provider needs API keys, add them to config/apis.yml.example
+* Edit or add information on User model as needed

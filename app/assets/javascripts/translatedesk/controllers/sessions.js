@@ -1,5 +1,5 @@
 //
-angular.module('translatedesk.controllers').controller('SessionsController', ['$scope', '$location', '$cookieStore', 'Session', function($scope, $location, $cookieStore, Session) {
+angular.module('translatedesk.controllers').controller('SessionsController', ['$scope', '$location', '$cookieStore', '$window', 'Session', function($scope, $location, $cookieStore, $window, Session) {
   
   $scope.session = Session.userSession;
   $scope.signed = Session.signed;
@@ -33,5 +33,7 @@ angular.module('translatedesk.controllers').controller('SessionsController', ['$
       $scope.message = 'Could not logout';
     });
   };
+
+  $scope.providers = $window.App.providers;
 
 }]);

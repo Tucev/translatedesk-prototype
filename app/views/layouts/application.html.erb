@@ -37,8 +37,10 @@
                 <input type="email" id="email" name="email" placeholder="Email" ng-model="session.email" ng-minlength="2" required>
                 <input type="password" id="password" name="password" placeholder="Password" ng-model="session.password" ng-minlength="2" password-validate required>
                 <button type="submit" class="btn">Login</button>
-                <a href="/register">Sign up</a> | 
-                <span class="icon-twitter"></span> <%= link_to 'Sign in with Twitter', user_omniauth_authorize_path(:twitter), { :id => 'twitter-signin', :target => '_self' } %>
+                <a href="/register">Sign up</a>
+                <% @providers.each do |provider| %>
+                   | <span class="icon-<%= provider %>"></span> <%= link_to "Sign in with #{provider.capitalize}", user_omniauth_authorize_path(provider.to_sym), { :id => "#{provider}-signin", :target => '_self' } %>
+                <% end %>
                 <span class="message" ng-show="message" ng-init="message='<%= flash.notice %>'">{{message}}</span>
               </form>
             </div>

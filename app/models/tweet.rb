@@ -1,25 +1,13 @@
 require 'twitter'
 
-class Tweet < ActiveRecord::Base
+class Tweet < Post
+ 
+  self.table_name = 'posts'
 
   TWITTER_MAX_LENGTH = 140
 
-  belongs_to :user
-
-  attr_accessible :text, :original_tweet_id, :original_tweet_author, :source_language, :target_language, :user_id
-  attr_accessor :original_tweet_author
-
-  validates_presence_of :truncated_text, :original_tweet_id, :original_tweet_author, :text, :user_id 
-  validates_uniqueness_of :uuid
-
-  before_validation :generate_uuid, :on => :create
-  before_validation :preprocess_tweet, :on => :create
-  before_validation :publish_on_twitter, :on => :create
-  after_create :remove_draft
-
   # Fetch tweets from Twitter
   def self.fetch(query = '', options = {})
-
     query = query.to_s
     options = { :result_type => 'recent' }.merge(options)
 
@@ -37,7 +25,6 @@ class Tweet < ActiveRecord::Base
       # User or tweet does not exist
       []
     end
-      
   end
 
   # Fetch a conversation from a tweet
@@ -73,48 +60,16 @@ class Tweet < ActiveRecord::Base
     full_text + ' ' + url
   end
 
-  # FIXME: Better if this is a named_scope?
-  def self.translations(status_id)
-    Tweet.all :conditions => { :original_tweet_id => status_id }
-  end
-
   # Return URL for a tweet. Notice: this may change over time!
-  def twitter_url
-    self.published_tweet_id.present? ? 'https://twitter.com/statuses/' + self.published_tweet_id.to_s : ''
-  end
-
-  # Return URL for a tweet from the API. Notice: this may change over time!
-  def api_twitter_url
-    self.original_tweet_id.present? ? 'https://twitter.com/twitterapi/status/' + self.original_tweet_id.to_s : ''
-  end
-
-  def target_language_readable
-    (entry = ISO_639.find(self.target_language)) ? entry.english_name : self.target_language
+  def published_url
+    self.published_post_id.present? ? 'https://twitter.com/statuses/' + self.published_post_id.to_s : ''
   end
 
   def as_json(options={})
-    super.as_json(options).merge({ :twitter_url => twitter_url, :author_name => user.name, :author_url => user.twitter_url, :target_language_readable => target_language_readable })
+    super.as_json(options).merge({ :published_url => published_url, :author_name => user.name, :author_url => user.twitter_url, :target_language_readable => target_language_readable })
   end
 
-  protected
-
-  def generate_uuid
-    begin
-      self.uuid = SecureRandom.uuid
-    end while self.class.exists?(:uuid => self.uuid)
-  end
-
-  def preprocess_tweet
-    if self.text.present?
-      # FIXME: Is there a better way to get the path/link in the model? Because we are breaking MVC here... also look for a better way to get the host
-      full_url = Rails.application.routes.url_helpers.tweet_path(self.uuid, :only_path => false, :host => TRANSLATEDESK_CONF['public_host'])
-      bitly = Bitly.new(BITLY['username'], BITLY['api_key'])
-      url = bitly.shorten(full_url, :history => 1)
-      self.truncated_text = Tweet.truncate_text(self.text, self.original_tweet_author, url.short_url)
-    end
-  end
-
-  def publish_on_twitter
+  def publish
     Twitter.configure do |config|
       config.consumer_key = TWITTER_CONF['consumer_key']
       config.consumer_secret = TWITTER_CONF['consumer_secret']
@@ -122,12 +77,7 @@ class Tweet < ActiveRecord::Base
       config.oauth_token_secret = self.user.twitter_oauth_token_secret
     end
     client = Twitter::Client.new
-    response = client.update(self.truncated_text, { :in_reply_to_status_id => self.original_tweet_id })
-    self.published_tweet_id = response.id.to_s
+    response = client.update(self.truncated_text, { :in_reply_to_status_id => self.original_post_id })
+    self.published_post_id = response.id.to_s
   end
-
-  def remove_draft
-    TweetDraft.destroy_all :user_id => self.user_id, :original_tweet_id => self.original_tweet_id
-  end
-
 end

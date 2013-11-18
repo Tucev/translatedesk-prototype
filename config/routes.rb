@@ -1,10 +1,10 @@
 Translatedesk::Application.routes.draw do
-  resources :tweets do
+  resources :posts do
     collection do
       get 'fetch', 'conversation', 'preview', 'translations'
     end
   end
-  match 'tweet/:uuid' => 'tweets#show', :as => 'tweet'
+  match 'post/:uuid' => 'posts#show', :as => 'post'
 
   resource :machine_translation do
     collection do
@@ -13,7 +13,7 @@ Translatedesk::Application.routes.draw do
     end
   end
 
-  resources :tweet_drafts
+  resources :post_drafts
 
   devise_for :users, :controllers => { :omniauth_callbacks => 'omniauth_callbacks' }
 
