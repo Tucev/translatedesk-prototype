@@ -29,7 +29,7 @@ App.providers.twitter = {
     // FIXME: Is there a better way to iterate?
     for (var i = 0; i < data.length; i++) {
       // Set additional data for the post
-      data[i].popularity = ((t.retweet_count || 0) + (t.favorite_count || 0));
+      data[i].popularity = ((data[i].retweet_count || 0) + (data[i].favorite_count || 0));
       data[i].created_at = Date.parse(data[i].created_at);
       data[i].media_count = (data[i].entities && data[i].entities.media && data[i].entities.media.length);
       data[i].urls_count = (data[i].entities && data[i].entities.urls && data[i].entities.urls.length);

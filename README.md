@@ -66,7 +66,7 @@ Just it. The new machine translator will be available magically on the UI.
 
 #### Adding a new provider
 
-Translatedesk comes with support to Twitter. If you want to give support to another provider, here are the steps (first, you need to think about a unique identifier for it, ideally only letters in lower case, and the provider must be supported on OnmiAuth):
+Translatedesk comes with support to Twitter. If you want to give support to another provider, here are the steps (first, you need to think about a unique identifier for it, ideally only letters in lower case, and the provider must be supported on OmniAuth):
 
 * Add a new provider to omniauth_callbacks_controller.rb, so the user can login through this new provider
 * On the AngularJS layer, implement a new provider on app/assets/javascripts/translatedesk/providers, check the Twitter one as example
