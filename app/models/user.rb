@@ -20,6 +20,8 @@ class User < ActiveRecord::Base
       if auth.provider == 'twitter'
         user.twitter_oauth_token = auth.credentials.token
         user.twitter_oauth_token_secret = auth.credentials.secret
+      elsif auth.provider == 'facebook'
+        user.facebook_oauth_token = auth.credentials.token
       end
     end
   end
@@ -41,6 +43,10 @@ class User < ActiveRecord::Base
 
   def twitter_url
     (self.provider == 'twitter' and self.uid.present?) ? 'https://twitter.com/account/redirect_by_id?id=' + self.uid.to_s : '' 
+  end
+
+  def facebook_url
+    (self.provider == 'facebook' and self.uid.present?) ? 'https://www.facebook.com/profile.php?id=' + self.uid.to_s : ''
   end
 
   # Do not output sensible attributes, like passwords or tokens

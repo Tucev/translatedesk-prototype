@@ -4,10 +4,11 @@ class PostsController < ApplicationController
   
   skip_before_filter :authenticate_user!, :only => :show
   before_filter(:except => :show) { |c| c.load_model params[:provider] }
+  before_filter(:except => :show) { |c| c.check_user params[:provider] }
 
   # Get posts
   def fetch
-    respond_with @model.fetch(params[:query].to_s, params[:options])
+    respond_with @model.fetch(params[:query].to_s, params[:options], current_user)
   end
 
   # Get a conversation from a post
@@ -18,7 +19,6 @@ class PostsController < ApplicationController
   # Create a post
   def create
     begin
-      raise 'You must be signed in through the same provider you are trying to translate' unless current_user.provider == params[:provider]
       @post = @model.create!(
         :text => params[:text],
         :source_language => params[:source_language],
@@ -55,5 +55,9 @@ class PostsController < ApplicationController
 
   def load_model(provider)
     @model = Post::PROVIDERS.include?(provider.to_sym) ? Post::PROVIDERS[provider.to_sym] : Post
+  end
+
+  def check_user(provider)
+    raise 'You must be signed in through the same provider you are trying to translate' unless current_user.provider == provider
   end
 end

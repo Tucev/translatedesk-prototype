@@ -18,6 +18,7 @@ gem 'omniauth'
 gem 'omniauth-twitter'
 gem 'omniauth-facebook'
 gem 'bitly'
+gem 'koala', '~> 1.8.0rc1'
 
 #
 group :development do

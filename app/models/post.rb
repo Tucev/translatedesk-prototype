@@ -18,7 +18,7 @@ class Post < ActiveRecord::Base
   before_validation :publish, :on => :create
   after_create :remove_draft
 
-  def self.fetch(query = '', options = {})
+  def self.fetch(query = '', options = {}, user = nil)
     Post.all options
   end
 

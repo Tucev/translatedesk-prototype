@@ -1,0 +1,35 @@
+<div class="post" ng-controller="PublishController">
+
+  <div class="post-body">
+    <img class="post-profile-image" src="" alt="" />
+
+    <div class="post-content">
+      <p>
+        <span class="post-user">{{post.user.name}}</span> 
+        <span class="post-text">{{post.text}}</span>
+      </p>
+
+      <ul class="post-stats">
+        <li><span>{{post.shares_count}}</span> shares</li>
+        <li><span>{{post.likes_count}}</span> likes</li>
+        <li><span>{{post.popularity}}</span> popularity</li>
+        <li ng-show="post.distance"><span>{{post.distance}}</span> km from your current location</li>
+      </ul>
+
+      <a class="post-view-media" ng-click="post.viewMedia = true" ng-show="post.picture && !post.viewMedia">&raquo; View attached media</a>
+      <div class="post-media" ng-show="post.viewMedia">
+        <img ng-src="{{post.picture}}" />
+      </div>
+
+      <!-- FIXME: How does conversation will work here? -->
+    </div>
+
+    <div class="post-actions">
+      <span data-datetime="{{post.created_at}}" class="post-date">{{post.created_at | date:'h:mma Z d MMM yy'}}</span> 
+      <a ng-click="translate(post)" ng-hide="post == workbench.source">translate &raquo;</a>
+    </div>
+  </div>
+
+  <div class="post-footer"></div>
+
+</div>

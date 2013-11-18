@@ -7,7 +7,7 @@ class Tweet < Post
   TWITTER_MAX_LENGTH = 140
 
   # Fetch tweets from Twitter
-  def self.fetch(query = '', options = {})
+  def self.fetch(query = '', options = {}, user = nil)
     query = query.to_s
     options = { :result_type => 'recent' }.merge(options)
 

@@ -79,6 +79,10 @@ GEM
     json (1.8.0)
     jwt (0.1.8)
       multi_json (>= 1.5)
+    koala (1.8.0rc1)
+      addressable
+      faraday
+      multi_json
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
@@ -186,6 +190,7 @@ DEPENDENCIES
   iso-639
   jbuilder
   jquery-rails
+  koala (~> 1.8.0rc1)
   mysql
   omniauth
   omniauth-facebook

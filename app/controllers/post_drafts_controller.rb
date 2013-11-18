@@ -5,8 +5,8 @@ class PostDraftsController < ApplicationController
   def create
     saved = PostDraft.create_or_update({ :user_id => current_user.id,
                                          :text => params[:text].to_s,
-                                         :provider => params[:provider],
-                                         :original_post_id => params[:original_post_id].to_i
+                                         :provider => params[:provider].to_s,
+                                         :original_post_id => params[:original_post_id].to_s
                                        })
     respond_with({ :saved => saved }, :location => '/post_drafts')
   end
