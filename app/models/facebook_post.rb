@@ -6,7 +6,7 @@ class FacebookPost < Post
   def self.fetch(query = '', options = {}, user = nil)
     query = query.to_s
     options[:limit] = options[:count]
-    options = {}.merge(options)
+    options[:fields] = 'id,from,message,created_time,shares,likes,picture,link,comments,place'
     
     graph = Koala::Facebook::API.new(user.facebook_oauth_token)
 
@@ -14,7 +14,18 @@ class FacebookPost < Post
       if query.blank?
         []
       else
-        graph.search(query, options)
+        results = graph.search(query, options)
+        # Workaround to get the locale
+        # FIXME: Look for a better approach
+        users = {}
+        results.each { |post| users[post['from']['id'].to_s] = '' }
+        graph.fql_query('SELECT uid, locale FROM user WHERE uid IN (%s)' % users.keys.join(',')).each do |result|
+          users[result['uid'].to_s] = result['locale']
+        end
+        results.each do |result|
+          result['lang'] = users[result['from']['id'].to_s]
+        end
+        results
       end
     rescue
       []
@@ -52,4 +63,17 @@ class FacebookPost < Post
     self.published_post_id = response['id'].to_s
   end
 
+  def self.supported_languages
+    Rails.cache.fetch 'facebook_supported_languages' do
+      require 'open-uri'
+      doc = Nokogiri::HTML(open('https://www.facebook.com/translations/FacebookLocales.xml'))
+      langs = {}
+      doc.css('locale').each do |locale|
+        name = locale.css('englishname').first.children.text
+        code = locale.css('standard representation').first.children.text
+        langs[code] = name
+      end
+      langs
+    end
+  end
 end

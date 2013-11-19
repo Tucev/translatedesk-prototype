@@ -27,7 +27,7 @@ angular.module('translatedesk.controllers').controller('PublishController', ['$s
   $scope.filter = {};
   $scope.filterQueue = function(p) {
     for (var filter in $scope.filter) {
-      if ($scope.filter[filter] && !p[filter]) return false;
+      if ($scope.filter[filter] && (!p[filter] || (typeof $scope.filter[filter] == 'string' && $scope.filter[filter] != p[filter]))) return false;
     }
     return true;
   };

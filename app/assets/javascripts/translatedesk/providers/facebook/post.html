@@ -5,14 +5,15 @@
 
     <div class="post-content">
       <p>
-        <span class="post-user">{{post.user.name}}</span> 
+        <span class="post-user"><a href="{{post.user.url}}" target="_blank">{{post.user.name}}</a></span> 
         <span class="post-text">{{post.text}}</span>
       </p>
 
       <ul class="post-stats">
         <li><span>{{post.shares_count}}</span> shares</li>
         <li><span>{{post.likes_count}}</span> likes</li>
-        <li><span>{{post.popularity}}</span> popularity</li>
+        <li><span>{{post.comments_count}}</span> comments</li>
+        <li><span>{{post.popularity}}</span> resonance</li>
         <li ng-show="post.distance"><span>{{post.distance}}</span> km from your current location</li>
       </ul>
 

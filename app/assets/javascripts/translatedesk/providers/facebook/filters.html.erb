@@ -1,0 +1,7 @@
+<% environment.context_class.instance_eval { include ActionView::Helpers } %>
+<ul class="filters">
+  <li>language is <%= select_tag('filter-lang', content_tag(:option, '', :value => '') + options_from_collection_for_select(FacebookPost.supported_languages, :first, :last), { 'ng-model' => 'filter.lang' }) %></li>
+  <li><input type="checkbox" ng-model="filter.picture" /> contains image</li>
+  <li><input type="checkbox" ng-model="filter.link" /> contains link</li>
+  <li><input type="checkbox" ng-model="filter.distance" /> contains location</li>
+</ul>
