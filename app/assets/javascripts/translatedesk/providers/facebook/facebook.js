@@ -23,7 +23,7 @@ App.providers.facebook = {
       if (data[i].comments_count == 25) data[i].comments_count += '+';
       data[i].created_at = Date.parse(data[i].created_time);
       data[i].user = { screen_name : data[i].from.name, name : data[i].from.name, url : 'https://www.facebook.com/profile.php?id=' + data[i].from.id };
-      data[i].text = data[i].message;
+      data[i].text = data[i].message || data[i].name;
       data[i].id_str = data[i].id;
       if (Post.userPosition && data[i].place && data[i].place.location) {
         data[i].distance = haversine(data[i].place.location.latitude, data[i].place.location.longitude, Post.userPosition.coords.latitude, Post.userPosition.coords.longitude).toFixed(2);

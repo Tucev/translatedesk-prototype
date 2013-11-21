@@ -6,15 +6,22 @@ class FacebookPost < Post
   def self.fetch(query = '', options = {}, user = nil)
     query = query.to_s
     options[:limit] = options[:count]
-    options[:fields] = 'id,from,message,created_time,shares,likes,picture,link,comments,place'
+    options[:fields] = 'id,from,message,created_time,shares,likes,picture,link,comments,place,name'
     
     graph = Koala::Facebook::API.new(user.facebook_oauth_token)
+    results = []
 
     begin
       if query.blank?
-        []
+        results = []
+      elsif query[0] == '@'
+        results = graph.get_connections(query[1..-1], 'feed', options)
+      elsif (query =~ /^[0-9]+$/).present?
+        results = [graph.get_object(query)]
       else
         results = graph.search(query, options)
+      end
+      unless results.empty?
         # Workaround to get the locale
         # FIXME: Look for a better approach
         users = {}
@@ -25,8 +32,8 @@ class FacebookPost < Post
         results.each do |result|
           result['lang'] = users[result['from']['id'].to_s]
         end
-        results
       end
+      results
     rescue
       []
     end
