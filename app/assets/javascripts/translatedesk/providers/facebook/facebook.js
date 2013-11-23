@@ -22,7 +22,7 @@ App.providers.facebook = {
       if (data[i].likes_count == 25) data[i].likes_count += '+';
       if (data[i].comments_count == 25) data[i].comments_count += '+';
       data[i].created_at = Date.parse(data[i].created_time);
-      data[i].user = { screen_name : data[i].from.name, name : data[i].from.name, url : 'https://www.facebook.com/profile.php?id=' + data[i].from.id };
+      data[i].user = { screen_name : data[i].from.name, name : data[i].from.name, url : 'https://www.facebook.com/profile.php?id=' + data[i].from.id, profile_image_url : data[i].user_picture };
       data[i].text = data[i].message || data[i].name;
       data[i].id_str = data[i].id;
       if (Post.userPosition && data[i].place && data[i].place.location) {

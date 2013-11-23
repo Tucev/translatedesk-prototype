@@ -22,15 +22,16 @@ class FacebookPost < Post
         results = graph.search(query, options)
       end
       unless results.empty?
-        # Workaround to get the locale
+        # Workaround to get the locale and picture
         # FIXME: Look for a better approach
         users = {}
-        results.each { |post| users[post['from']['id'].to_s] = '' }
-        graph.fql_query('SELECT uid, locale FROM user WHERE uid IN (%s)' % users.keys.join(',')).each do |result|
-          users[result['uid'].to_s] = result['locale']
+        results.each { |post| users[post['from']['id'].to_s] = { :locale => '', :picture => '' } }
+        graph.fql_query('SELECT uid, locale, pic_square FROM user WHERE uid IN (%s)' % users.keys.join(',')).each do |result|
+          users[result['uid'].to_s] = { :locale => result['locale'], :picture => result['pic_square'] }
         end
         results.each do |result|
-          result['lang'] = users[result['from']['id'].to_s]
+          result['lang'] = users[result['from']['id'].to_s][:locale]
+          result['user_picture'] = users[result['from']['id'].to_s][:picture]
         end
       end
       results
