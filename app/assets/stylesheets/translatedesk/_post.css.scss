@@ -28,6 +28,10 @@
     .post-user {
       color: $darkSkyBlue; 
     }
+
+    .post-text {
+      word-break: break-all;
+    }
   }
 
   .post-stats {
