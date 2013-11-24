@@ -4,9 +4,14 @@ Written in Ruby On Rails 3 (Ruby 1.9) + AngularJS.
 
 ### How to run the system
 
-* Run `bundle install` to install missing gems
-* Copy config/database.yml.example to config/database.yml and configure you database
+* Run `bundle install` to install missing gems (if you run into issues with the MySQL gem, install it standalonely
+  using `gem install mysql`, check the installed version with `gem list | grep mysql` and add this version to the 
+  Gemfile... then you can run `bundle install`)
+* Copy config/database.yml.example to config/database.yml and configure you database... note that if you
+  are using SQLite, you need to create the directories where the database files will be stored (which is
+  tmp/dbs on the example file, so you need to create them using `mkdir -p tmp/dbs`)
 * Copy config/apis.yml.example to config/apis.yml and configure all APIs
+* Install langid.py (https://github.com/saffsd/langid.py)
 * Run `rake db:migrate` to create the tables in the database
 * Start the server: `rails s`
 * Open http://localhost:3000 in your browser

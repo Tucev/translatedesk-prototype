@@ -4,6 +4,14 @@
   -webkit-border-radius: $radius;  
 }
 
+@mixin rotate($angle) {
+  -webkit-transform: rotate($angle);  /* Chrome, Safari 3.1+ */
+  -moz-transform: rotate($angle);     /* Firefox 3.5-15 */
+  -ms-transform: rotate($angle);      /* IE 9 */
+  -o-transform: rotate($angle);       /* Opera 10.50-12.00 */
+  transform: rotate($angle);          /* Firefox 16+, IE 10+, Opera 12.10+ */
+}
+
 @import 'variables';
 @import 'globals';
 @import 'navbar';

@@ -1,4 +1,5 @@
 <ul class="filters">
+  <li>language is <select name="filter-lang" id="filter-lang" ng-model="filter.lang" ng-options="code as name for (code, name) in languages"><option value="">Any</option></select></li>
   <li><input type="checkbox" ng-model="filter.in_reply_to_status_id" /> contains @reply</li>
   <li><input type="checkbox" ng-model="filter.is_not_reply" /> no @reply</li>
   <li><input type="checkbox" ng-model="filter.retweeted_status" /> contains "RT"</li>

@@ -25,7 +25,7 @@ module Translator
 
   def self.translate(translator, source, target, text)
     if PROVIDERS.include?(translator)
-      translator.constantize.translate(source, target, text)
+      translator.constantize.translate(source, target, text).gsub(/@ ([A-Za-z0-9_]+)/, '@\1')
     end
   end
 

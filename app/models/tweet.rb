@@ -10,21 +10,37 @@ class Tweet < Post
   def self.fetch(query = '', options = {}, user = nil)
     query = query.to_s
     options = { :result_type => 'recent' }.merge(options)
+    lang_handler = options['lang']
+    options.delete('lang')
 
+    results = []
     begin
       if query.blank?
-        []
+        results = []
       elsif query[0] == '@'
-        Twitter.user_timeline query, options
+        results = Twitter.user_timeline query, options
       elsif (query =~ /^[0-9]+$/).present?
-        [Twitter.status(query, options)]
+        results = [Twitter.status(query, options)]
       else
-        Twitter.search(query, options).results
+        results = Twitter.search(query, options).results
       end
+
+      # Detect language
+      unless lang_handler == 'provider'
+        texts = {}
+        results.each { |post| texts[post.id.to_s] = post.text }
+        texts = Post.auto_detect_language(texts, lang_handler)
+      end
+      results.each do |result|
+        lang = result.attrs[:lang] = lang_handler == 'provider' ? result.user.lang : texts[result.id.to_s]
+        result.attrs[:lang_name] = (entry = ISO_639.find(lang)) ? entry.english_name : lang.capitalize 
+      end
+
+      results
     rescue
-      # User or tweet does not exist
       []
     end
+
   end
 
   # Fetch a conversation from a tweet

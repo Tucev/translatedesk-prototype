@@ -1,5 +1,10 @@
 .posts {
   margin: 0;
+
+  li {
+    position: relative;
+    overflow: hidden;
+  }
 }
 
 .post {
@@ -10,6 +15,20 @@
   width: 95%;
   font-size: $medium;
   @include rounded-corners($unit/2);
+
+  .post-language {
+    @include rotate(45deg);
+    display: block;
+    position: absolute;
+    right: -35px;
+    top: 5px;
+    width: 100px;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: $smallest;
+    color: $darkGrey;
+    background: $lightGrey;
+  }
 
   .post-profile-image,
   .post-content {

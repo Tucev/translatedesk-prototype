@@ -1,13 +1,20 @@
 class GoogleTranslate
 
   def self.translate(source, target, text, options = {})
-    google = GoogleFish.new(GOOGLE_TRANSLATE_API_KEY)
-    google.translate(source, target, text, options).gsub(/@ ([A-Za-z0-9_]+)/, '@\1')
+    EasyTranslate.translate(text, options.merge({ :from => source, :to => target, :key => GOOGLE_TRANSLATE_API_KEY }))
   end
 
   def self.languages(target = nil, options = {})
-    google = GoogleFish.new(GOOGLE_TRANSLATE_API_KEY)
-    google.get_supported_languages(target)
+    EasyTranslate.translations_available(target, :key => GOOGLE_TRANSLATE_API_KEY)
+  end
+
+  def self.detect(text)
+    text = [text] unless text.is_a?(Array)
+    begin
+      EasyTranslate.detect(text, :key => GOOGLE_TRANSLATE_API_KEY)
+    rescue
+      text.collect{ |t| t = '' }
+    end
   end
 
 end

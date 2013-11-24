@@ -22,7 +22,8 @@ angular.module('translatedesk.resources').factory('Post', ['$http', '$window', f
       params : {
         provider : Post.workbench.provider.id,
         query : query,
-        'options[count]' : options.count
+        'options[count]' : options.count,
+        'options[lang]' : options.lang
       },
       transformResponse : $http.defaults.transformResponse.concat([
         function(data, headersGetter) {

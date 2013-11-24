@@ -37,6 +37,39 @@ class Post < ActiveRecord::Base
     self.all :conditions => { :original_post_id => post_id, :provider => provider }
   end
 
+  def self.auto_detect_language(text = {}, handler = 'langid')
+    # Each text should be uniquely identified
+    if text.is_a?(Array)
+      hash = {}
+      text.each_with_index{ |t, i| hash[i] = t }
+      text = hash
+    elsif text.is_a?(String)
+      text = { 0 => text }
+    end
+
+    case handler
+    when 'google'
+      # FIXME: Not doing batch detection for the time being because of the limits... but the library already
+      #        supports that, just pass an array instead of a string
+      text.each{ |i, t| text[i] = GoogleTranslate.detect(t).first }
+    when 'langid'
+      if %x[which langid]
+        text.each do |i, t|
+          io = IO.popen('langid', 'w+')
+          io.puts t
+          io.close_write
+          text[i] = io.gets.match(/\('([^']+)', .*/)[1]
+        end
+      else
+        text.each{ |i, t| text[i] = '' }
+      end
+    else
+      text.each{ |i, t| text[i] = '' }
+    end
+
+    text
+  end
+
   def target_language_readable
     (entry = ISO_639.find(self.target_language)) ? entry.english_name : self.target_language
   end

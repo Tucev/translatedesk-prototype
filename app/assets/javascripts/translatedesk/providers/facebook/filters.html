@@ -1,0 +1,6 @@
+<ul class="filters">
+  <li>language is <select name="filter-lang" id="filter-lang" ng-model="filter.lang" ng-options="code as name for (code, name) in languages"><option value="">Any</option></select></li>
+  <li><input type="checkbox" ng-model="filter.picture" /> contains image</li>
+  <li><input type="checkbox" ng-model="filter.link" /> contains link</li>
+  <li><input type="checkbox" ng-model="filter.distance" /> contains location</li>
+</ul>

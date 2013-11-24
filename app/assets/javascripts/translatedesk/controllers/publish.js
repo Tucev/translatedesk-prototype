@@ -5,12 +5,18 @@ angular.module('translatedesk.controllers').controller('PublishController', ['$s
   $scope.sortCriteria = 'popularity';
   $scope.sortOrder = 'reverse';
   $scope.searchLimit = 20;
+  $scope.sourceLanguageHandler = 'provider'
+  $scope.languages = {};
 
   // Get original posts
   $scope.fetch = function() {
-    Post.prototype.$fetch($scope.postQuery, { count : $scope.searchLimit })
+    Post.prototype.$fetch($scope.postQuery, { count : $scope.searchLimit, lang : $scope.sourceLanguageHandler })
     .success(function(data, status, headers, config) {
       $scope.posts = data;
+      $scope.languages = {};
+      for (var i = 0; i < data.length; i++) {
+        if (data[i].lang && !$scope.languages[data[i].lang]) $scope.languages[data[i].lang] = data[i].lang_name;
+      }
     })
     .error(function(data, status, headers, config) {
       $scope.message = 'Could not fetch data';

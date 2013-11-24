@@ -1,11 +1,3 @@
-GIT
-  remote: git://github.com/caiosba/google_fish.git
-  revision: d7fd39a35539ae67ee44671224ccd3ec9b9df08e
-  specs:
-    google_fish (0.2.2)
-      addressable
-      json
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -55,6 +47,8 @@ GEM
       orm_adapter (~> 0.1)
       railties (~> 3.1)
       warden (~> 1.2.1)
+    easy_translate (0.3.3)
+      json
     erubis (2.7.0)
     eventmachine (1.0.3)
     execjs (1.4.0)
@@ -186,7 +180,7 @@ DEPENDENCIES
   bitly
   bootstrap-sass (~> 2.3.2.1)
   devise (~> 2.1.0)
-  google_fish!
+  easy_translate
   iso-639
   jbuilder
   jquery-rails

@@ -21,19 +21,31 @@ class FacebookPost < Post
       else
         results = graph.search(query, options)
       end
+
       unless results.empty?
         # Workaround to get the locale and picture
         # FIXME: Look for a better approach
+        texts = {}
+        unless options[:lang] == 'provider'
+          results.each { |post| texts[post['id'].to_s] = post['message'] }
+          texts = Post.auto_detect_language(texts, options[:lang])
+        end
+
         users = {}
         results.each { |post| users[post['from']['id'].to_s] = { :locale => '', :picture => '' } }
+
         graph.fql_query('SELECT uid, locale, pic_square FROM user WHERE uid IN (%s)' % users.keys.join(',')).each do |result|
           users[result['uid'].to_s] = { :locale => result['locale'], :picture => result['pic_square'] }
         end
+
         results.each do |result|
-          result['lang'] = users[result['from']['id'].to_s][:locale]
-          result['user_picture'] = users[result['from']['id'].to_s][:picture]
+          uid = result['from']['id'].to_s
+          result['lang'] = options[:lang] == 'provider' ? users[uid][:locale].gsub(/_.*$/, '') : texts[result['id'].to_s]
+          result['lang_name'] = (entry = ISO_639.find(result['lang'])) ? entry.english_name : result['lang'].capitalize
+          result['user_picture'] = users[uid][:picture]
         end
       end
+
       results
     rescue
       []

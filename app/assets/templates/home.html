@@ -29,6 +29,13 @@
         <option value="100">100</option>
       </select>
 
+      <label>Source language handler</label>
+      <select ng-model="sourceLanguageHandler" ng-change="posts.length && fetch()" class="span12">
+        <option value="provider">Provider ({{workbench.provider.name}})</option>
+        <option value="google">Google Translate Auto-Detect</option>
+        <option value="langid">Local Language Identification Tool (langid.py)</option>
+      </select>
+
       <label>Filters</label>
       <div ng-include="filterTemplateUrl()"></div>
     </form>

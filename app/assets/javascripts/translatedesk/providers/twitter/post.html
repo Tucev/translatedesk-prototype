@@ -9,6 +9,8 @@ FIXME: Evaluate if rich view is better than a custom template, like we do below
 <div class="post" ng-controller="PublishController">
 
   <div class="post-body">
+    <span class="post-language">{{post.lang}}</span>
+ 
     <img class="post-profile-image" src="{{post.user.profile_image_url}}" alt="" />
 
     <div class="post-content">
