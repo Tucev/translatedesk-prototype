@@ -11,7 +11,8 @@ Written in Ruby On Rails 3 (Ruby 1.9) + AngularJS.
   are using SQLite, you need to create the directories where the database files will be stored (which is
   tmp/dbs on the example file, so you need to create them using `mkdir -p tmp/dbs`)
 * Copy config/apis.yml.example to config/apis.yml and configure all APIs
-* Install langid.py (https://github.com/saffsd/langid.py)
+* Install langid.py (https://github.com/saffsd/langid.py), which is used for auto-language detection
+* Install `dict` (and optionally `dictd` and some dictionaries for it, in order to have your own server), which is available for most of Linux distributions... for example, you can install it on Debian / Ubuntu using `apt-get install dict dictd`
 * Run `rake db:migrate` to create the tables in the database
 * Start the server: `rails s`
 * Open http://localhost:3000 in your browser
