@@ -12,7 +12,8 @@ class Dictionary < ActiveRecord::Base
       if %x[which dict]
         # Open3 is the only safe way to do what we need
         require 'open3'
-        dict = ISO_639.find(from).alpha3 + '-' + ISO_639.find(to).alpha3
+        # FIXME: This works on Ubuntu, maybe this should be customized?
+        dict = 'fd-' + ISO_639.find(from).alpha3 + '-' + ISO_639.find(to).alpha3
         stdin, stdout, stderr, wait_thr = Open3.popen3('dict', '-d', dict, *words)
         word = ''
 
