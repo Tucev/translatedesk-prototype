@@ -141,14 +141,18 @@
 </div>
 
 <div id="dictionary" class="span3" ng-controller="DictionaryController">
-  <div class="well">
+  <div class="well" class="span12">
     <h5>Dictionary</h5>
     <div class="message" ng-show="message">{{message}}</div>
     <form ng-submit="search()">
       <p><input type="text" class="span12" ng-model="dictPattern" placeholder="Search & Filter" /></p>
     </form>
-    <ul id="dict-words">
-      <li ng-repeat="word in dictWords | filter:searchFilter"><span class="dict-word">{{word.original}}</span><span class="dict-meaning">{{word.meaning}}</span></li>
+    <p ng-hide="dictWords.length"><em>You can use the field above to filter the words below, by just typing, or search for more words by typing words on the field above (separated by commas) and hitting [enter].</em></p>
+    <ul id="dict-words" class="span12">
+      <li class="span12" ng-repeat="word in dictWords | filter:searchFilter">
+        <span class="span4 dict-word">{{word.original}}</span>
+        <span class="span8 dict-meaning">{{word.meaning}}</span>
+      </li>
     </ul>
   </div>
 </div>
