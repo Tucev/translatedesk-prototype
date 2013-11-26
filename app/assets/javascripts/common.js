@@ -12,3 +12,15 @@ var haversine = function(lat1, lon1, lat2, lon2) {
   var d = R * c; // Distance in km
   return d;
 };
+
+// Get target language
+// FIXME: It's better to get the language from the server, using header HTTP_ACCEPT_LANGUAGE
+var getTargetLanguage = function() {
+  var language = window.navigator.userLanguage || window.navigator.language;
+  if (language) {
+    return language.replace(/-.*$/, '');
+  }
+  else {
+    return 'en'; // Fallback to English as default
+  }
+};

@@ -109,18 +109,6 @@ angular.module('translatedesk.controllers').controller('TranslationController', 
     }
   };
 
-  // Get target language
-  // FIXME: It's better to get the language from the server, using header HTTP_ACCEPT_LANGUAGE
-  var getTargetLanguage = function() {
-    var language = window.navigator.userLanguage || window.navigator.language;
-    if (language) {
-      return language;
-    }
-    else {
-      return 'en'; // Fallback to English as default
-    }
-  };
-
   // When provider is changed, set the source language to be
   // the post language and the target to be the user language
   // if available and not set

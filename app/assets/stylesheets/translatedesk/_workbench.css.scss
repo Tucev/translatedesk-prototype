@@ -1,5 +1,10 @@
 #translation-workbench {
 
+  #translation-source {
+    position: relative;
+    overflow: hidden;
+  }
+
   #translation-target {
     position: relative;
     padding-bottom: $unit * 5;

@@ -1,0 +1,25 @@
+#dictionary {
+  #dict-words {
+    margin-left: 0;
+
+    li {
+      display: table-row;
+
+      span {
+        display: table-cell;
+        border-bottom: 1px dotted $grey;
+        padding-top: $unit;
+        padding-bottom: $unit;
+      }
+
+      .dict-word {
+        font-weight: bold;
+        width: 29%;
+      }
+
+      .dict-meaning {
+        width: 70%;
+      }
+    }
+  }
+}

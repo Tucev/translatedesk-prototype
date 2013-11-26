@@ -15,8 +15,14 @@ Translatedesk::Application.routes.draw do
 
   resources :post_drafts
 
+  resources :dictionaries do
+    collection do
+      post 'words_meanings'
+    end
+  end
+
   devise_for :users, :controllers => { :omniauth_callbacks => 'omniauth_callbacks' }
 
-  root :to => "home#index"
-  match "*page" => "home#index"
+  root :to => 'home#index'
+  match '*page' => 'home#index'
 end
