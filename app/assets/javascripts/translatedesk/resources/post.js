@@ -73,6 +73,13 @@ angular.module('translatedesk.resources').factory('Post', ['$http', '$window', f
     });
   };
 
+  Post.prototype.$annotate = function(text, post_id) {
+    return $http.post('/annotations', {
+      text : text,
+      post_id : post_id
+    });
+  };
+
   // The post the user is working on right now
   // This is shared among controllers
   Post.workbench = {

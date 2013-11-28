@@ -6,6 +6,7 @@ class Post < ActiveRecord::Base
   }
 
   belongs_to :user
+  has_many :annotations
 
   attr_accessible :original_text, :text, :original_post_id, :original_post_author, :source_language, :target_language, :user_id, :provider
   attr_accessor :original_post_author
@@ -75,7 +76,9 @@ class Post < ActiveRecord::Base
   end
 
   def as_json(options={})
-    super.as_json(options).merge({ :author_name => user.name, :target_language_readable => target_language_readable })
+    super.as_json(options).merge({ :author_name => user.name,
+                                   :target_language_readable => target_language_readable,
+                                   :annotations => annotations })
   end
 
   def published_url

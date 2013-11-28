@@ -130,9 +130,19 @@
     <div id="translations">
       <h5>Translations</h5>
       <ul class="posts">
-        <li class="post well well-small" ng-repeat="post in translations">
+        <li class="post well well-small" ng-repeat="(id, post) in translations">
           <p class="translation-info">Translated to {{post.target_language_readable}} by {{post.author_name}} on {{post.created_at | date:'h:mma Z d MMM yy'}}</p>
-          <p class="translation-text">{{post.text}} <span><i class="icon-external-link"></i> <a href="{{post.published_url}}" target="_blank">See online</a></span></p>
+          <p class="translation-text" class="well">{{post.text}} <span><i class="icon-external-link"></i> <a href="{{post.published_url}}" target="_blank">See online</a></span></p>
+          <ul class="annotations">
+            <li ng-repeat="annotation in post.annotations">
+              <a href="{{annotation.user.url}}" target="_blank">{{annotation.user.name}}</a> <em>({{annotation.date | date:'h:mma Z d MMM yy'}})</em>:<br />{{annotation.text}}
+            </li>
+          </ul>
+          <form ng-submit="annotate(post)">
+            <input type="hidden" name="post_id" ng-model="post.id" value="{{id}}" />
+            <input class="span12" type="text" ng-model="post.annotation" name="annotation" placeholder="Add an annotation and hit [enter]" />
+            <span ng-show="post.annotationMessage" class="message">{{post.annotationMessage}}</span>
+          </form>
         </li>
       </ul>
     </div>

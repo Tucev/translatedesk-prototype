@@ -125,6 +125,27 @@
           }
         }
       }
+
+      form {
+        font-size: $medium;
+        input {
+          font-size: $medium;
+        }
+      }
+
+      .annotations {
+        margin: 0;
+        margin-bottom: $unit;
+        border-top: 1px dotted $lightGrey;
+
+        li {
+          border-bottom: 1px dotted $lightGrey;
+        }
+
+        em {
+          color: $grey;
+        }
+      }
     }
 
   }

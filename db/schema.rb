@@ -11,7 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131118042939) do
+ActiveRecord::Schema.define(:version => 20131127231808) do
+
+  create_table "annotations", :force => true do |t|
+    t.integer  "post_id"
+    t.integer  "user_id"
+    t.text     "text"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "annotations", ["post_id"], :name => "index_annotations_on_post_id"
+  add_index "annotations", ["user_id"], :name => "index_annotations_on_user_id"
 
   create_table "post_drafts", :force => true do |t|
     t.integer  "user_id"

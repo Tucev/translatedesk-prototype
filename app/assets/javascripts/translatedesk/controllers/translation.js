@@ -33,7 +33,10 @@ angular.module('translatedesk.controllers').controller('TranslationController', 
     // FIXME: Add cache to avoid loading the same translations more than once
     Post.prototype.$translations(p.id_str)
     .success(function(data, status, headers, config) {
-      $scope.translations = data; 
+      $scope.translations = {};
+      for (var i = 0; i < data.length; i++) {
+        $scope.translations[data[i].id] = data[i];
+      }
     })
     .error(function(data, status, headers, config) {
       alert('Sorry, some error happened on loading translations, please try again.');
@@ -131,7 +134,7 @@ angular.module('translatedesk.controllers').controller('TranslationController', 
     Post.prototype.$publish($scope.sourceLanguage, $scope.targetLanguage, $scope.originalPost.text, $scope.originalPost.id_str, $scope.originalPost.user.screen_name, $scope.translatedPost)
     .success(function(data, status, headers, config) {
       if (data && data.published_url) {
-        $scope.translations.push(data);
+        $scope.translations[data.id] = data;
         $scope.lastSave.ago = null;
         $scope.publishingMessage = 'Translation published! <a href="' + data.published_url + '" target="_blank">See it online!</a>';
       }
@@ -161,6 +164,19 @@ angular.module('translatedesk.controllers').controller('TranslationController', 
 
   $scope.postTemplateUrl = function() {
     return '/assets/translatedesk/providers/' + $scope.workbench.provider.id + '/post.html';
+  };
+
+  $scope.annotate = function(post) {
+    $scope.annotationMessage = 'Adding annotation...';
+    Post.prototype.$annotate(post.annotation, post.id)
+    .success(function(data, status, headers, config) {
+      $scope.translations[post.id].annotations.push(data);
+      post.annotationMessage = 'Annotation added!';
+      post.annotation = '';
+    })
+    .error(function(data, status, headers, config) {
+      post.annotationMessage = 'Some unknown error happened, please try again.';
+    });
   };
 
 }]);

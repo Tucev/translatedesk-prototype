@@ -21,6 +21,8 @@ Translatedesk::Application.routes.draw do
     end
   end
 
+  resources :annotations
+
   devise_for :users, :controllers => { :omniauth_callbacks => 'omniauth_callbacks' }
 
   root :to => 'home#index'

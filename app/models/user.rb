@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
 
   has_many :posts, :dependent => :destroy
   has_many :post_drafts, :dependent => :destroy
+  has_many :annotations, :dependent => :destroy
 
   # Include default devise modules
   devise :database_authenticatable, :registerable, :omniauthable,
@@ -47,6 +48,10 @@ class User < ActiveRecord::Base
 
   def facebook_url
     (self.provider == 'facebook' and self.uid.present?) ? 'https://www.facebook.com/profile.php?id=' + self.uid.to_s : ''
+  end
+
+  def url
+    twitter_url.empty? ? facebook_url : twitter_url
   end
 
   # Do not output sensible attributes, like passwords or tokens
