@@ -17,7 +17,9 @@ class FacebookPost < Post
       elsif query[0] == '@'
         results = graph.get_connections(query[1..-1], 'feed', options)
       elsif (query =~ /^[0-9]+$/).present?
-        results = [graph.get_object(query)]
+        # This can be the ID of a post or a page... let's see if it's a page first
+        results = graph.get_connections(query, 'feed', options)
+        results = [graph.get_object(query)] if results.empty?
       else
         results = graph.search(query, options)
       end
