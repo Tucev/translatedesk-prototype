@@ -1,5 +1,9 @@
 #translation-workbench {
 
+  h5 {
+    float: left;
+  }
+
   #translation-source {
     position: relative;
     overflow: hidden;
@@ -148,6 +152,57 @@
       }
     }
 
+  }
+
+  .translation-workbench-inner {
+    clear: both;
+  }
+
+  .queue-count {
+    cursor: help;
+  }
+
+  #queue-bar {
+    li {
+      cursor: pointer;
+      color: $linkColor;
+      float: right;
+      padding: $unit;
+      padding-right: 0;
+      display: block;
+      font-size: $medium;
+    }
+    li:hover {
+      text-decoration: underline;
+    }
+  }
+
+  #queue {
+    li {
+      div {
+        cursor: pointer;
+        clear: both;
+
+        &:hover {
+          border-color: $darkGrey;
+        }
+      }
+
+      .remove-from-list {
+        display: block;
+        color: $grey;
+        float: right;
+        text-decoration: none;
+
+        &:hover {
+          color: $darkGrey;
+        }
+
+        span {
+          display: none;
+        }
+      }
+    }
   }
 
 }

@@ -1,5 +1,5 @@
 //
-angular.module('translatedesk.controllers').controller('TranslationController', ['$scope', '$location', '$timeout', 'Post', 'PostDraft', 'MachineTranslation', function($scope, $location, $timeout, Post, PostDraft, MachineTranslation) {
+angular.module('translatedesk.controllers').controller('TranslationController', ['$scope', '$location', '$timeout', 'Post', 'PostDraft', 'MachineTranslation', 'UserSession', 'Session', function($scope, $location, $timeout, Post, PostDraft, MachineTranslation, UserSession, Session) {
 
   $scope.workbench = Post.workbench;
 
@@ -179,4 +179,63 @@ angular.module('translatedesk.controllers').controller('TranslationController', 
     });
   };
 
+  $scope.removeFromQueue = function(post) {
+    if (confirm('Are you sure?')) {
+      if (!post) {
+        post = $scope.workbench.source;
+      }
+      for (var i = 0; i < $scope.workbench.queue.length; i++) {
+        if ($scope.workbench.queue[i].id == post.id) {
+          $scope.workbench.queue.splice(i, 1);
+          if (post.id == $scope.workbench.source.id) {
+            if ($scope.workbench.queue.length) {
+              $scope.workbench.source = $scope.workbench.queue[$scope.workbench.queue.length - 1];
+            }
+            else {
+              $scope.workbench.source = null;
+            }
+          }
+        }
+      }
+    }
+  };
+
+  $scope.showQueue = function() {
+    $('#queue').modal();
+  };
+
+  $scope.clearQueue = function() {
+    if (confirm('Are you sure?')) {
+      $scope.workbench.queue = [];
+      $scope.workbench.source = null;
+    }
+  };
+
+  // Auto save the queue
+  $scope.queueLastSave = {
+    queue : angular.copy($scope.workbench.queue),
+    time : null,
+    ago: null
+  };
+  var autoSaveQueue = function() {
+    var queue = $scope.workbench.queue;
+    if (Session.signed.in && !angular.equals($scope.queueLastSave.queue, queue)) {
+      UserSession.prototype.$update(Session.currentUser.data.id, queue)
+      .success(function(data, status, headers, config) {
+        $scope.queueLastSave.time = new Date;
+        $scope.queueLastSave.queue = angular.copy(queue);
+        $timeout(autoSaveQueue, 5000);
+      })
+      .error(function(data, status, headers, config) {
+        $timeout(autoSaveQueue, 5000);
+      });
+    }
+    else {
+      $timeout(autoSaveQueue, 5000);
+    }
+    if ($scope.queueLastSave.time) {
+      $scope.queueLastSave.ago = moment($scope.queueLastSave.time).fromNow();
+    }
+  };
+  $timeout(autoSaveQueue, 5000);
 }]);

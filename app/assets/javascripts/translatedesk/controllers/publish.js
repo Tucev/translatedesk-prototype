@@ -48,8 +48,16 @@ angular.module('translatedesk.controllers').controller('PublishController', ['$s
   $scope.workbench = Post.workbench;
 
   $scope.translate = function(p) {
-    $scope.workbench.source = p;
-    $window.scrollTo(0, 0);
+    if (!$scope.workbench.source) {
+      $scope.workbench.source = p;
+      $window.scrollTo(0, 0);
+    }
+    if ($scope.workbench.queue.length < 50) {
+      $scope.workbench.queue.push(p);
+    }
+    else {
+      alert('You reached the limit of posts on the list');
+    }
   };
 
   $scope.filterTemplateUrl = function() {
@@ -58,6 +66,16 @@ angular.module('translatedesk.controllers').controller('PublishController', ['$s
 
   $scope.postTemplateUrl = function() {
     return '/assets/translatedesk/providers/' + $scope.workbench.provider.id + '/post.html';
+  };
+
+  $scope.postQueued = function(post) {
+    var list = $scope.workbench.queue;
+    for (var i = 0; i < list.length; i++) {
+      if (list[i].id === post.id) {
+        return true;
+      }
+    }
+    return false;
   };
 
 }]);

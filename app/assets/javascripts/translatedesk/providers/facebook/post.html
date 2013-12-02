@@ -29,7 +29,7 @@
 
     <div class="post-actions">
       <span data-datetime="{{post.created_at}}" class="post-date">{{post.created_at | date:'h:mma Z d MMM yy'}}</span> 
-      <a ng-click="translate(post)" ng-hide="post == workbench.source">translate &raquo;</a>
+      <a ng-click="translate(post)" ng-hide="post == workbench.source || postQueued(post)">translate &raquo;</a>
     </div>
   </div>
 

@@ -19,6 +19,14 @@ angular.module('translatedesk.resources').factory('UserSession', ['$http', funct
     return $http.get('/users/sign_out');
   };
 
+  UserSession.prototype.$show = function(id) {
+    return $http.get('/users/' + id);
+  };
+
+  UserSession.prototype.$update = function(id, queue) {
+    return $http.put('/users/' + id, { queue : angular.toJson(queue) });
+  };
+
   return UserSession;
 
 }]);

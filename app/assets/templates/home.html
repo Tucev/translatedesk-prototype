@@ -48,7 +48,32 @@
 </div>
  
 <div id="translation-workbench" class="span5" ng-controller="TranslationController">
-  <h5>Translation Workbench</h5>
+  <h5>Translation Workbench <span ng-show="workbench.queue.length" class="queue-count" title="How many posts you have on your list">({{workbench.queue.length}})</span></h5>
+  <ul id="queue-bar" ng-show="workbench.queue.length">
+    <li ng-click="removeFromQueue()"><i class="icon-remove"></i> Remove from list</li>
+    <li ng-click="showQueue()"><i class="icon-list"></i> View your list</li>
+  </ul>
+  <div id="queue" class="modal hide fade in" style="display: none;">
+    <div class="modal-header">
+      <a class="close" data-dismiss="modal">X</a>
+      <h3>List</h3>
+      <p>Click on a post in order to translate it <em ng-show="queueLastSave.ago">(queue last saved {{queueLastSave.ago}})</em>.</p>
+    </div>
+    <div class="modal-body">
+      <ol>
+        <li ng-repeat="post in workbench.queue">
+          <a href="#" ng-click="removeFromQueue(post)" title="Remove from list" class="remove-from-list"><i class="icon-remove"></i> <span>Remove from list</span></a>
+          <div class="well" ng-click="workbench.source = post" data-dismiss="modal">
+            <span><a href="{{post.user.url}}" target="_blank">{{post.user.name}}</a>: {{post.text}}</span>
+          </div>
+        </li>
+      </ol>
+    </div>
+    <div class="modal-footer">
+      <a href="#" class="btn" ng-click="clearQueue()">Clear list</a>
+      <a href="#" class="btn" data-dismiss="modal">Close</a>
+    </div>
+  </div>
   
   <!-- FIXME: Is there a way to bind variables instead of using ng-repeat? -->
   <div class="translation-workbench-inner" ng-show="workbench.source" ng-repeat="post in [workbench.source]">

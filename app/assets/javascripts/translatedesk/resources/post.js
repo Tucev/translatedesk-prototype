@@ -1,5 +1,5 @@
 // FIXME: Replace some methods by RESTFUL resources
-angular.module('translatedesk.resources').factory('Post', ['$http', '$window', function($http, $window) {
+angular.module('translatedesk.resources').factory('Post', ['$http', '$window', 'Session', function($http, $window, Session) {
 
   var Post = function(options) {
     angular.extend(this, options);
@@ -82,11 +82,21 @@ angular.module('translatedesk.resources').factory('Post', ['$http', '$window', f
 
   // The post the user is working on right now
   // This is shared among controllers
-  Post.workbench = {
-    source : null,
-    provider : null,
-    providers : $window.App.providers
-  };
+  if (Session.signed.in) {
+    Post.workbench = {
+      source : Session.currentUser.data.queue.length ? Session.currentUser.data.queue[0] : null,
+      provider : $window.App.providers[Session.currentUser.data.provider],
+      queue : Session.currentUser.data.queue
+    };
+  }
+  else {
+    Post.workbench = {
+      source : null,
+      provider : null,
+      queue : []
+    };
+  }
+  Post.workbench.providers = $window.App.providers;
   for (p in Post.workbench.providers) {
     if (!Post.workbench.provider && Post.workbench.providers[p].isDefault) Post.workbench.provider = Post.workbench.providers[p];
   }

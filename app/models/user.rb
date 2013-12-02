@@ -57,8 +57,11 @@ class User < ActiveRecord::Base
   # Do not output sensible attributes, like passwords or tokens
   def as_json(options = {})
     {
+      id: self.id,
       name: self.name,
-      email: self.email
+      email: self.email,
+      queue: self.queue ? JSON.parse(self.queue) : [],
+      provider: self.provider
     }
   end
 
