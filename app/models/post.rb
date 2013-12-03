@@ -15,8 +15,8 @@ class Post < ActiveRecord::Base
 
   before_validation :generate_uuid, :on => :create
   before_validation :preprocess, :on => :create
-  before_validation :publish, :on => :create
-  after_create :remove_draft
+  after_commit :publish, :on => :create
+  after_commit :remove_draft, :on => :create
 
   serialize :original_post_author, Hash
 
@@ -110,7 +110,7 @@ class Post < ActiveRecord::Base
   end
 
   def remove_draft
-    PostDraft.destroy_all :user_id => self.user_id, :original_post_id => self.original_post_id, :provider => self.provider
+    PostDraft.destroy_all(:user_id => self.user_id, :original_post_id => self.original_post_id, :provider => self.provider) if self.published_post_id
   end
 
 end

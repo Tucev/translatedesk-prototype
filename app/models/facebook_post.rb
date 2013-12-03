@@ -80,7 +80,7 @@ class FacebookPost < Post
   def publish
     graph = Koala::Facebook::API.new(self.user.facebook_oauth_token)
     response = graph.put_connections('me', FACEBOOK_CONF['namespace'] + ':translate', :message => self.truncated_text, :post => self.public_url, 'fb:explicitly_shared' => true)
-    self.published_post_id = response['id'].to_s
+    self.update_attribute(:published_post_id, response['id'].to_s)
   end
 
   def self.supported_languages

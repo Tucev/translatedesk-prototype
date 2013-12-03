@@ -94,6 +94,6 @@ class Tweet < Post
     end
     client = Twitter::Client.new
     response = client.update(self.truncated_text, { :in_reply_to_status_id => self.original_post_id })
-    self.published_post_id = response.id.to_s
+    self.update_attribute(:published_post_id, response.id.to_s)
   end
 end
