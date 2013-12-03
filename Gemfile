@@ -20,18 +20,19 @@ gem 'omniauth-facebook'
 gem 'bitly'
 gem 'koala', '~> 1.8.0rc1'
 
-#
 group :development do
   gem 'sqlite3'
   gem 'railroady'
+  gem 'guard', '>= 2.2.2',       :require => false
+  gem 'guard-livereload',        :require => false
+  gem 'rack-livereload'
+  gem 'rb-fsevent',              :require => false
 end
 
-#
 group :assets do
   gem 'quiet_assets'
 end
 
-#
 group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
