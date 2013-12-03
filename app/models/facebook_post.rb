@@ -65,12 +65,7 @@ class FacebookPost < Post
   end
 
   def published_url
-    if self.published_post_id.present?
-      id, story = self.published_post_id.split('_')
-      "https://www.facebook.com/permalink.php?story_fbid=#{story}&id=#{id}"
-    else
-      ''
-    end
+    self.published_post_id.present? ? 'https://www.facebook.com/' + self.published_post_id : ''
   end
 
   def as_json(options={})
@@ -78,9 +73,11 @@ class FacebookPost < Post
   end
 
   def publish
-    graph = Koala::Facebook::API.new(self.user.facebook_oauth_token)
-    response = graph.put_connections('me', FACEBOOK_CONF['namespace'] + ':translate', :message => self.truncated_text, :post => self.public_url, 'fb:explicitly_shared' => true)
-    self.update_attribute(:published_post_id, response['id'].to_s)
+    if self.published_post_id.blank?
+      graph = Koala::Facebook::API.new(self.user.facebook_oauth_token)
+      response = graph.put_connections('me', FACEBOOK_CONF['namespace'] + ':translate', :message => self.truncated_text, :post => self.public_url, 'fb:explicitly_shared' => true)
+      self.update_attribute(:published_post_id, response['id'].to_s)
+    end
   end
 
   def self.supported_languages

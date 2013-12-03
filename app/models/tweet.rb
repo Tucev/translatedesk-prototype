@@ -86,14 +86,16 @@ class Tweet < Post
   end
 
   def publish
-    Twitter.configure do |config|
-      config.consumer_key = TWITTER_CONF['consumer_key']
-      config.consumer_secret = TWITTER_CONF['consumer_secret']
-      config.oauth_token = self.user.twitter_oauth_token
-      config.oauth_token_secret = self.user.twitter_oauth_token_secret
+    if self.published_post_id.blank?
+      Twitter.configure do |config|
+        config.consumer_key = TWITTER_CONF['consumer_key']
+        config.consumer_secret = TWITTER_CONF['consumer_secret']
+        config.oauth_token = self.user.twitter_oauth_token
+        config.oauth_token_secret = self.user.twitter_oauth_token_secret
+      end
+      client = Twitter::Client.new
+      response = client.update(self.truncated_text, { :in_reply_to_status_id => self.original_post_id })
+      self.update_attribute(:published_post_id, response.id.to_s)
     end
-    client = Twitter::Client.new
-    response = client.update(self.truncated_text, { :in_reply_to_status_id => self.original_post_id })
-    self.update_attribute(:published_post_id, response.id.to_s)
   end
 end

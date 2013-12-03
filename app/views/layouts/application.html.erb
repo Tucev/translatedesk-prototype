@@ -13,7 +13,7 @@
     <meta property="og:type" content="<%= FACEBOOK_CONF['namespace'] %>:post" />
     <meta property="og:url" content="<%= @post.public_url %>" />
     <meta property="og:title" content="<%= @post.original_post_author[:name] %>" /> 
-    <meta property="og:image" content="<%= @post.original_post_author[:profile_image_url].blank? ? TRANSLATEDESK_CONF['public_host'] + '/logo.png' : @post.original_post_author[:profile_image_url] %>" /> 
+    <meta property="og:image" content="<%= @post.original_post_author[:profile_image_url].blank? ? 'http://' + TRANSLATEDESK_CONF['public_host'] + '/logo.png' : @post.original_post_author[:profile_image_url] %>" /> 
     <meta property="og:description" content="<%= @post.original_text %>" /> 
     <% end %>    
 
