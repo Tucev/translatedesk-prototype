@@ -1,7 +1,8 @@
 Translatedesk::Application.routes.draw do
   resources :posts do
     collection do
-      get 'fetch', 'conversation', 'preview', 'translations'
+      get 'fetch', 'conversation', 'translations'
+      post 'preview'
     end
   end
   match 'post/:uuid' => 'posts#show', :as => 'post'

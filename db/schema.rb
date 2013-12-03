@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131130043320) do
+ActiveRecord::Schema.define(:version => 20131203040336) do
 
   create_table "annotations", :force => true do |t|
     t.integer  "post_id"
@@ -46,8 +46,9 @@ ActiveRecord::Schema.define(:version => 20131130043320) do
     t.string   "source_language"
     t.string   "target_language"
     t.string   "uuid"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
+    t.text     "original_post_author"
   end
 
   add_index "posts", ["original_post_id"], :name => "index_posts_on_original_post_id"

@@ -9,7 +9,6 @@ class Post < ActiveRecord::Base
   has_many :annotations
 
   attr_accessible :original_text, :text, :original_post_id, :original_post_author, :source_language, :target_language, :user_id, :provider
-  attr_accessor :original_post_author
 
   validates_presence_of :truncated_text, :original_post_id, :original_post_author, :text, :user_id, :provider
   validates_uniqueness_of :uuid
@@ -18,6 +17,8 @@ class Post < ActiveRecord::Base
   before_validation :preprocess, :on => :create
   before_validation :publish, :on => :create
   after_create :remove_draft
+
+  serialize :original_post_author, Hash
 
   def self.fetch(query = '', options = {}, user = nil)
     Post.all options
@@ -29,9 +30,7 @@ class Post < ActiveRecord::Base
 
   # Prepare a text for a post
   def self.truncate_text(text, author, url)
-    full_text = text =~ /^TT / ? text : 'TT ' + text
-    full_text = full_text =~ /^TT @#{author} / ? full_text : full_text.gsub(/^TT /, 'TT @' + author + ' ')
-    full_text + ' ' + url
+    text + ' ' + url
   end
 
   def self.translations(post_id, provider = nil)
@@ -85,6 +84,11 @@ class Post < ActiveRecord::Base
     ''
   end
 
+  def public_url
+    # FIXME: Is there a better way to get the path/link in the model? Because we are breaking MVC here... also look for a better way to get the host
+    Rails.application.routes.url_helpers.post_path(self.uuid, :only_path => false, :host => TRANSLATEDESK_CONF['public_host'])
+  end
+
   protected
 
   def generate_uuid
@@ -95,10 +99,8 @@ class Post < ActiveRecord::Base
 
   def preprocess
     if self.text.present?
-      # FIXME: Is there a better way to get the path/link in the model? Because we are breaking MVC here... also look for a better way to get the host
-      full_url = Rails.application.routes.url_helpers.post_path(self.uuid, :only_path => false, :host => TRANSLATEDESK_CONF['public_host'])
       bitly = Bitly.new(BITLY['username'], BITLY['api_key'])
-      url = bitly.shorten(full_url, :history => 1)
+      url = bitly.shorten(self.public_url, :history => 1)
       self.truncated_text = Post.truncate_text(self.text, self.original_post_author, url.short_url)
     end
   end

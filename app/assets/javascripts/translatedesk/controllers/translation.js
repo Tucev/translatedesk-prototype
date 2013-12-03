@@ -55,7 +55,7 @@ angular.module('translatedesk.controllers').controller('TranslationController', 
     ago : null
   };
   var autoSave = function() {
-    if ($scope.lastSave.text != $scope.translatedPost) {
+    if ($scope.lastSave.text != $scope.translatedPost && $scope.workbench.source) {
       PostDraft.prototype.$save($scope.workbench.provider.id, $scope.translatedPost, $scope.workbench.source.id_str)
       .success(function(data, status, headers, config) {
         if (data.saved) {
@@ -131,7 +131,8 @@ angular.module('translatedesk.controllers').controller('TranslationController', 
     $scope.sourceLanguage = $scope.originalPost.lang;
     $scope.targetLanguage = getTargetLanguage();
 
-    Post.prototype.$publish($scope.sourceLanguage, $scope.targetLanguage, $scope.originalPost.text, $scope.originalPost.id_str, $scope.originalPost.user.screen_name, $scope.translatedPost)
+    var user = { name : $scope.originalPost.user.name,  screen_name : $scope.originalPost.user.screen_name,  url : $scope.originalPost.user.url, profile_image_url : $scope.originalPost.user.profile_image_url };
+    Post.prototype.$publish($scope.sourceLanguage, $scope.targetLanguage, $scope.originalPost.text, $scope.originalPost.id_str, user, $scope.translatedPost)
     .success(function(data, status, headers, config) {
       if (data && data.published_url) {
         $scope.translations[data.id] = data;
@@ -152,7 +153,8 @@ angular.module('translatedesk.controllers').controller('TranslationController', 
   };
 
   $scope.preview = function() {
-    Post.prototype.$preview($scope.translatedPost, $scope.originalPost.user.screen_name)
+    var user = { name : $scope.originalPost.user.name,  screen_name : $scope.originalPost.user.screen_name,  url : $scope.originalPost.user.url, profile_image_url : $scope.originalPost.user.profile_image_url };
+    Post.prototype.$preview($scope.translatedPost, user)
     .success(function(data, status, headers, config) {
       $scope.previewContent = data.text;
     })

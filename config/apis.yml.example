@@ -19,6 +19,7 @@ development:
   facebook:
     app_id: 'your app id'
     app_secret: 'your app secret'
+    namespace: 'namespace'
 
 production:
   translatedesk:
@@ -39,6 +40,7 @@ production:
   facebook:
     app_id: 'your app id'
     app_secret: 'your app secret'
+    namespace: 'namespace'
 
 test:
   translatedesk:
@@ -59,3 +61,4 @@ test:
   facebook:
     app_id: 'your app id'
     app_secret: 'your app secret'
+    namespace: 'namespace'

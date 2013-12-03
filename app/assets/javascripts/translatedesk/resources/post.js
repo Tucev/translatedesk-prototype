@@ -55,12 +55,10 @@ angular.module('translatedesk.resources').factory('Post', ['$http', '$window', '
   };
 
   Post.prototype.$preview = function(text, author) {
-    return $http.get('/posts/preview', {
-      params : { 
-        provider : Post.workbench.provider.id,
-        text : text,
-        author : author
-      }
+    return $http.post('/posts/preview', {
+      provider : Post.workbench.provider.id,
+      text : text,
+      author : author
     });
   };
 

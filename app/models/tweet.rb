@@ -71,7 +71,7 @@ class Tweet < Post
   # Prepare a text for tweet
   def self.truncate_text(text, author, url)
     full_text = text =~ /^TT / ? text : 'TT ' + text
-    full_text = full_text =~ /^TT @#{author} / ? full_text : full_text.gsub(/^TT /, 'TT @' + author + ' ')
+    full_text = full_text =~ /^TT @#{author['screen_name']} / ? full_text : full_text.gsub(/^TT /, 'TT @' + author['screen_name'] + ' ')
     full_text = full_text.truncate(TWITTER_MAX_LENGTH - url.length, :separator => ' ', :omission => '... ')
     full_text + ' ' + url
   end

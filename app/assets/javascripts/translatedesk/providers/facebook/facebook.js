@@ -5,10 +5,10 @@ App.providers.facebook = {
   id : 'facebook',
   name : 'Facebook',
   isDefault : false,
-  charsLimit : 1000, // FIXME: Find out this limit
+  charsLimit : 400,
 
   prepopulate : function(t) {
-    return (t ? 'TT ' + t.user.screen_name + ': ' : '');
+    return '';
   },
 
   transformResponse : function(Post, data) {

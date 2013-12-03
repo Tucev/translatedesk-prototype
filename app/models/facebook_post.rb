@@ -61,9 +61,7 @@ class FacebookPost < Post
 
   # Prepare a text for a Facebook post
   def self.truncate_text(text, author, url)
-    full_text = text =~ /^TT / ? text : 'TT ' + text
-    full_text = full_text =~ /^TT #{author}: / ? full_text : full_text.gsub(/^TT /, 'TT ' + author + ': ')
-    full_text + ' ' + url
+    text + ' ' + url
   end
 
   def published_url
@@ -81,7 +79,7 @@ class FacebookPost < Post
 
   def publish
     graph = Koala::Facebook::API.new(self.user.facebook_oauth_token)
-    response = graph.put_connections('me', 'feed', :message => self.truncated_text)
+    response = graph.put_connections('me', FACEBOOK_CONF['namespace'] + ':translatedesk', :message => self.truncated_text, :post => self.public_url, 'fb:explicitly_shared' => true)
     self.published_post_id = response['id'].to_s
   end
 

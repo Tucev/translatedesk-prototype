@@ -43,7 +43,7 @@ class PostsController < ApplicationController
 
   # Preview how a text would be posted
   def preview
-    respond_with({ :text => @model.truncate_text(params[:text].to_s, params[:author].to_s, BITLY['example']) }, :location => '/posts')
+    respond_with({ :text => @model.truncate_text(params[:text].to_s, params[:author], BITLY['example']) }, :location => '/posts')
   end
 
   # Get translations of a post
