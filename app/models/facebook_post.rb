@@ -95,10 +95,10 @@ class FacebookPost < Post
   end
 
   def publish_annotation(annotation)
-    if self.published_id.blank? and self.post.published_post_id.present?
-      graph = Koala::Facebook::API.new(self.user.facebook_oauth_token)
-      response = graph.put_comment(self.post.published_post_id, 'Note: ' + annotation.text)
-      self.update_attribute(:published_id, response['id'].to_s)
+    if annotation.published_id.blank? and self.published_post_id.present?
+      graph = Koala::Facebook::API.new(annotation.user.facebook_oauth_token)
+      response = graph.put_comment(self.published_post_id, 'Note: ' + annotation.text)
+      annotation.update_attribute(:published_id, response['id'].to_s)
     end
   end
 end
