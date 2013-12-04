@@ -6,7 +6,7 @@ class Post < ActiveRecord::Base
   }
 
   belongs_to :user
-  has_many :annotations
+  has_many :annotations, :after_add => :publish_annotation
 
   attr_accessible :original_text, :text, :original_post_id, :original_post_author, :source_language, :target_language, :user_id, :provider
 
@@ -89,6 +89,10 @@ class Post < ActiveRecord::Base
     Rails.application.routes.url_helpers.post_path(self.uuid, :only_path => false, :host => TRANSLATEDESK_CONF['public_host'])
   end
 
+  def publish_annotation(annotation)
+    # By default the annotation is just persisted on the database
+  end
+
   protected
 
   def generate_uuid
@@ -112,5 +116,4 @@ class Post < ActiveRecord::Base
   def remove_draft
     PostDraft.destroy_all(:user_id => self.user_id, :original_post_id => self.original_post_id, :provider => self.provider) if self.published_post_id
   end
-
 end

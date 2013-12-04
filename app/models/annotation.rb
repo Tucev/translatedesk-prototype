@@ -9,6 +9,7 @@ class Annotation < ActiveRecord::Base
     {
       :text => self.text,
       :date => self.created_at,
+      :published_id => self.published_id,
       :user => {
         :name => self.user.name,
         :url => self.user.url 

@@ -173,7 +173,10 @@ angular.module('translatedesk.controllers').controller('TranslationController', 
     Post.prototype.$annotate(post.annotation, post.id)
     .success(function(data, status, headers, config) {
       $scope.translations[post.id].annotations.push(data);
-      post.annotationMessage = 'Annotation added!';
+      post.annotationMessage = 'Annotation added.';
+      if (data.published_id) {
+        post.annotationMessage += ' Annotation published.';
+      }
       post.annotation = '';
     })
     .error(function(data, status, headers, config) {
