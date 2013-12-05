@@ -35,6 +35,7 @@ App.providers.twitter = {
       data[i].urls_count = (data[i].entities && data[i].entities.urls && data[i].entities.urls.length);
       data[i].is_not_reply = !data[i].in_reply_to_status_id;
       data[i].user.url = 'https://twitter.com/account/redirect_by_id?id=' + data[i].user.id;
+      data[i].url = 'https://twitter.com/statuses/' + data[i].id_str;
       if (Post.userPosition && data[i].geo) {
         data[i].distance = haversine(data[i].geo.coordinates[0], data[i].geo.coordinates[1], Post.userPosition.coords.latitude, Post.userPosition.coords.longitude).toFixed(2);
       }

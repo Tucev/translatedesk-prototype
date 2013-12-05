@@ -97,6 +97,14 @@
   .post-date {
     color: $darkAluminium;
     display: block;
+
+    a {
+      color: $darkAluminium;
+      &:hover {
+        color: $darkAluminium;
+        text-decoration: underline;
+      }
+    }
   }
 
   .post-conversation {

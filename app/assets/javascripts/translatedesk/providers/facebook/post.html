@@ -28,7 +28,7 @@
     </div>
 
     <div class="post-actions">
-      <span data-datetime="{{post.created_at}}" class="post-date">{{post.created_at | date:'h:mma Z d MMM yy'}}</span> 
+      <span data-datetime="{{post.created_at}}" class="post-date"><a href="{{post.url}}" target="_blank">{{post.created_at | date:'h:mma Z d MMM yy'}}</a></span> 
       <a ng-click="translate(post)" ng-hide="postQueued(post)">translate &raquo;</a>
       <span class="message success" ng-show="postQueued(post)">picked</span>
     </div>

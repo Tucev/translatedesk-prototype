@@ -25,6 +25,7 @@ App.providers.facebook = {
       data[i].user = { screen_name : data[i].from.name, name : data[i].from.name, url : 'https://www.facebook.com/profile.php?id=' + data[i].from.id, profile_image_url : data[i].user_picture };
       data[i].text = data[i].message || data[i].name;
       data[i].id_str = data[i].id;
+      data[i].url = 'https://www.facebook.com/' + data[i].id;
       if (Post.userPosition && data[i].place && data[i].place.location) {
         data[i].distance = haversine(data[i].place.location.latitude, data[i].place.location.longitude, Post.userPosition.coords.latitude, Post.userPosition.coords.longitude).toFixed(2);
       }
