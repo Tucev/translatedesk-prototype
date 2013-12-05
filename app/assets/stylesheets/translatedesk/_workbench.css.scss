@@ -58,41 +58,6 @@
       color: $darkAluminium;
     }
 
-    .mt {
-      float: right;
-
-      .dropdown-menu {
-        padding: $unit;
-
-        p {
-          text-align: center;
-        }
-
-        .dropdown-menu-inner {
-          display: table;
-        }
-
-        li {
-          display: table-row;
-
-          label, select {
-            display: table-cell;
-            font-size: $small;
-          }
-
-          label {
-            padding-right: $unit / 2;
-            text-align: right;
-          }
-        }
-      }
-
-      .mt-message {
-        font-size: $small;
-        color: $darkSkyBlue;
-      }
-    }
-
     .workbench-form-footer {
       clear: both;
       border-top: 1px solid $grey;
@@ -101,6 +66,29 @@
   }
 
   #translations {
+
+    #mt-form {
+      clear: both;
+      font-size: $medium;
+
+      select {
+        display: inline;
+        font-size: $medium;
+        line-height: 22px;
+        height: 22px;
+        margin: 0;
+        width: 12%;
+      }
+
+      .mt-message {
+        font-size: $medium;
+        color: $darkSkyBlue;
+      }
+
+      input {
+        font-size: $medium;
+      }
+    }
 
     .post {
       position: relative;

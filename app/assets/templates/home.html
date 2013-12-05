@@ -107,53 +107,30 @@
       </form>
       <p class="counter" ng-class="{ 'post-limit-exausted' : translatedPost.length > workbench.provider.charsLimit }">{{workbench.provider.charsLimit - translatedPost.length}}</p>
       <p class="autosave" ng-show="lastSave.ago">Draft saved {{lastSave.ago}}</p>
-
-      <div class="btn-group open mt">
-        <a class="btn btn-mini" href="#">Machine translation</a>
-        <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">
-          <span class="icon-caret-down"></span>
-        </a>
-        <div class="dropdown-menu" ng-click="$event.stopPropagation()">
-          <div class="dropdown-menu-inner">
-            <form ng-submit="machineTranslate()">
-              <p class="mt-message">{{machineTranslationMessage}}</p>
-              <ul>
-                <li>
-                  <label>Provider</label> 
-                  <span>
-                    <select ng-change="selectMachineTranslator()" ng-init="getMachineTranslators()" ng-model="machineTranslator" ng-options="provider.name for provider in machineTranslators" required>
-                      <option value="">Choose</option>
-                    </select>
-                  </span>
-                </li>
-                <li>
-                  <label>From</label> 
-                  <span>
-                    <select ng-model="sourceLanguage" ng-options="language.code as language.name for language in machineTranslator.languages" required>
-                      <option value="">Choose</option>
-                    </select>
-                  </span>
-                </li>
-                <li>
-                  <label>To</label> 
-                  <span>
-                    <select ng-model="targetLanguage" ng-options="language.code as language.name for language in machineTranslator.languages" required>
-                      <option value="">Choose</option>
-                    </select>
-                  </span>
-                </li>
-              </ul>
-              <p><input type="submit" class="btn btn-mini" value="Translate" /></p>
-            </form>
-          </div>
-        </div>
-      </div>
-
       <div class="workbench-form-footer"></div>
     </div>
 
     <div id="translations">
       <h5>Translations</h5>
+
+      <form ng-submit="machineTranslate()" id="mt-form">
+        <p>Request machine translation through 
+        <select ng-change="selectMachineTranslator()" ng-init="getMachineTranslators()" ng-model="machineTranslator" ng-options="provider.name for provider in machineTranslators" required>
+          <option value=""> - </option>
+        </select> 
+        from 
+        <select ng-model="sourceLanguage" ng-options="language.code as language.name for language in machineTranslator.languages" required>
+          <option value=""> - </option>
+        </select> 
+        to 
+        <select ng-model="targetLanguage" ng-options="language.code as language.name for language in machineTranslator.languages" required>
+          <option value=""> - </option>
+        </select> 
+        <input type="submit" class="btn btn-mini" value="Translate" /> 
+        <span class="mt-message">{{machineTranslationMessage}}</span>
+        </p>
+      </form>
+
       <ul class="posts">
         <li class="post well well-small" ng-repeat="(id, post) in translations">
           <p class="translation-info">Translated to {{post.target_language_readable}} by {{post.author_name}} on {{post.created_at | date:'h:mma Z d MMM yy'}}</p>
