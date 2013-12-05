@@ -138,6 +138,7 @@ angular.module('translatedesk.controllers').controller('TranslationController', 
         $scope.translations[data.id] = data;
         $scope.lastSave.ago = null;
         $scope.publishingMessage = 'Translation published! <a href="' + data.published_url + '" target="_blank">See it online!</a>';
+        $scope.workbench.source.published = true;
       }
       else if (data && data.error) {
         $scope.publishingMessage = 'Could not publish. Reason: ' + data.error;
@@ -162,6 +163,13 @@ angular.module('translatedesk.controllers').controller('TranslationController', 
       $scope.previewContent = 'Some unknown error happened, please try again.';
     });
     $('#preview').modal();
+    
+    // If post was published, remove it from queue after modal closes
+    $('#preview').on('hidden.bs.modal', function() {
+      if ($scope.workbench.source.published) {
+        $scope.removeFromQueue($scope.workbench.source, true);
+      }
+    });
   };
 
   $scope.postTemplateUrl = function() {
@@ -184,8 +192,8 @@ angular.module('translatedesk.controllers').controller('TranslationController', 
     });
   };
 
-  $scope.removeFromQueue = function(post) {
-    if (confirm('Are you sure?')) {
+  $scope.removeFromQueue = function(post, skip_confirmation) {
+    if (skip_confirmation || confirm('Are you sure?')) {
       if (!post) {
         post = $scope.workbench.source;
       }
