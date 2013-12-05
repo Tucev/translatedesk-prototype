@@ -10,7 +10,7 @@
 
       <label>Sort by</label>
       <select ng-model="sortCriteria" class="span12">
-        <option value="popularity">Popularity</option>
+        <option value="popularity">Resonance</option>
         <option value="created_at">Date and Time</option>
         <option value="distance">Location</option>
       </select>
@@ -111,8 +111,6 @@
     </div>
 
     <div id="translations">
-      <h5>Translations</h5>
-
       <form ng-submit="machineTranslate()" id="mt-form">
         <p>Request machine translation through 
         <select ng-change="selectMachineTranslator()" ng-init="getMachineTranslators()" ng-model="machineTranslator" ng-options="provider.name for provider in machineTranslators" required>
@@ -130,6 +128,8 @@
         <span class="mt-message">{{machineTranslationMessage}}</span>
         </p>
       </form>
+      
+      <h5>Translations</h5>
 
       <ul class="posts">
         <li class="post well well-small" ng-repeat="(id, post) in translations">
