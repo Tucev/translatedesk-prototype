@@ -35,10 +35,14 @@ class FacebookPost < Post
 
         users = {}
         results.each { |post| users[post['from']['id'].to_s] = { :locale => '', :picture => '' } }
+        ids = users.keys.join(',')
 
-        graph.fql_query('SELECT uid, locale, pic_square FROM user WHERE uid IN (%s)' % users.keys.join(',')).each do |result|
-          users[result['uid'].to_s] = { :locale => result['locale'], :picture => result['pic_square'] }
-        end
+        fql = graph.fql_multiquery({
+          'pictures' => 'SELECT id, pic_square FROM profile WHERE id IN (%s)' % ids,
+          'locales' => 'SELECT uid, locale FROM user WHERE uid IN (%s)' % ids
+        })
+        fql['pictures'].each { |result| users[result['id'].to_s][:picture] = result['pic_square'] }
+        fql['locales'].each { |result| users[result['uid'].to_s][:locale] = result['locale'] }
 
         results.each do |result|
           uid = result['from']['id'].to_s
