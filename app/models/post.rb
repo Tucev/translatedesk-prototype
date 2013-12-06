@@ -105,7 +105,7 @@ class Post < ActiveRecord::Base
     if self.text.present?
       bitly = Bitly.new(BITLY['username'], BITLY['api_key'])
       url = bitly.shorten(self.public_url, :history => 1)
-      self.truncated_text = Post.truncate_text(self.text, self.original_post_author, url.short_url)
+      self.truncated_text = self.class.truncate_text(self.text, self.original_post_author, url.short_url)
     end
   end
 
