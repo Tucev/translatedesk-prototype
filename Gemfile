@@ -16,13 +16,13 @@ gem 'omniauth-twitter'
 gem 'omniauth-facebook'
 gem 'bitly'
 gem 'koala', '~> 1.8.0rc1'
+gem 'sqlite3'
 
 group :development do
-  gem 'sqlite3'
   gem 'railroady'
   gem 'guard', '>= 2.2.2', :require => false
   gem 'guard-livereload',  :require => false
-  gem 'rack-livereload'
+  gem 'rack-livereload',   :require => false
   gem 'rb-fsevent',        :require => false
 end
 
@@ -32,8 +32,5 @@ group :assets do
   gem 'compass-rails'
   gem 'bootstrap-sass', '~> 2.3.2.1'
   gem 'font-awesome-rails'
-end
-
-group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
