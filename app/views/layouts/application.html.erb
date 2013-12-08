@@ -9,13 +9,13 @@
 
     <% if @post and @post.provider == 'facebook' %>
     <!-- Facebook meta tags -->
-    <meta property="fb:app_id" content="<%= FACEBOOK_CONF['app_id'] %>" /> 
+    <meta property="fb:app_id" content="<%= FACEBOOK_CONF['app_id'] %>" />
     <meta property="og:type" content="<%= FACEBOOK_CONF['namespace'] %>:post" />
     <meta property="og:url" content="<%= @post.public_url %>" />
-    <meta property="og:title" content="<%= @post.original_post_author[:name] %>" /> 
-    <meta property="og:image" content="<%= @post.original_post_author[:profile_image_url].blank? ? 'http://' + TRANSLATEDESK_CONF['public_host'] + '/logo.png' : @post.original_post_author[:profile_image_url] %>" /> 
-    <meta property="og:description" content="<%= @post.original_text %>" /> 
-    <% end %>    
+    <meta property="og:title" content="<%= @post.original_post_author[:name] %>" />
+    <meta property="og:image" content="<%= @post.original_post_author[:profile_image_url].blank? ? 'http://' + TRANSLATEDESK_CONF['public_host'] + '/logo.png' : @post.original_post_author[:profile_image_url] %>" />
+    <meta property="og:description" content="<%= @post.original_text %>" />
+    <% end %>
 
     <link rel="shortcut icon" href="<%= asset_path("favicon.ico") %>" type="image/x-icon" />
     <%= stylesheet_link_tag "libs", :media => "all" %>
@@ -38,7 +38,7 @@
           </ul>
           <div class="user" ng-switch="signed.in" ng-controller="SessionsController" ng-init="signed.in = <%= user_signed_in? %>; currentUser.data = <%= current_user.to_json %>">
             <div class="user-logged-in" ng-switch-when="true">
-              <span>Hello, {{currentUser.data.name}}</span> 
+              <span>Hello, {{currentUser.data.name}}</span>
               <button ng-click="destroy()" class="btn">Logout</button>
               <span class="message" ng-show="message" ng-init="message='<%= flash.notice %>'">{{message}}</span>
             </div>
@@ -46,10 +46,11 @@
               <form ng-submit="create()">
                 <input type="email" id="email" name="email" placeholder="Email" ng-model="session.email" ng-minlength="2" required>
                 <input type="password" id="password" name="password" placeholder="Password" ng-model="session.password" ng-minlength="2" password-validate required>
-                <button type="submit" class="btn">Login</button>
+                <button type="submit" class="btn"> Login</button>
                 <a href="/register">Sign up</a>
+                <span class="alt-sign-in">or sign in with: </span>
                 <% @providers.each do |provider| %>
-                   | <span class="icon-<%= provider %>"></span> <%= link_to "Sign in with #{provider.capitalize}", user_omniauth_authorize_path(provider.to_sym), { :id => "#{provider}-signin", :target => '_self' } %>
+                  <%= link_to fa_icon(provider) + " #{provider.capitalize}", user_omniauth_authorize_path(provider.to_sym), { :id => "#{provider}-signin", :target => '_self' } %>
                 <% end %>
                 <span class="message" ng-show="message" ng-init="message='<%= flash.notice %>'">{{message}}</span>
               </form>
@@ -61,9 +62,9 @@
       <div class="content">
         <%= yield %>
       </div>
-      
+
       <footer></footer>
-    
+
     </div>
     <%= javascript_include_tag "libs" %>
     <%= javascript_include_tag "application" %>

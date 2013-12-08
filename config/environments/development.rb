@@ -1,6 +1,11 @@
 Translatedesk::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
+  # # Guard/livereload
+  # Automatically inject JavaScript needed for LiveReload
+  # per http://blog.55minutes.com/2013/01/lightning-fast-sass-reloading-in-rails-32/
+  config.middleware.insert_after(ActionDispatch::Static, Rack::LiveReload) if defined?(Rack::LiveReload)
+
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.

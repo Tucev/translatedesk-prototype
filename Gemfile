@@ -7,10 +7,7 @@ gem 'mysql2'
 gem 'jbuilder'
 gem 'jquery-rails'
 gem 'thin'
-gem 'sass-rails', '~> 3.2.3'
-gem 'bootstrap-sass', '~> 2.3.2.1'
 gem 'twitter'
-gem 'sass'
 gem 'easy_translate'
 gem 'bing_translator', '~> 4.0.0'
 gem 'iso-639'
@@ -20,19 +17,21 @@ gem 'omniauth-facebook'
 gem 'bitly'
 gem 'koala', '~> 1.8.0rc1'
 gem 'i18n', '>= 0.6.6'
+gem 'sqlite3'
 
-#
 group :development do
-  gem 'sqlite3'
   gem 'railroady'
+  gem 'guard', '>= 2.2.2', :require => false
+  gem 'guard-livereload',  :require => false
+  gem 'rack-livereload',   :require => false
+  gem 'rb-fsevent',        :require => false
 end
 
-#
 group :assets do
   gem 'quiet_assets'
-end
-
-#
-group :assets do
+  gem 'sass-rails'
+  gem 'compass-rails'
+  gem 'bootstrap-sass', '~> 2.3.2.1'
+  gem 'font-awesome-rails'
   gem 'uglifier', '>= 1.0.3'
 end
