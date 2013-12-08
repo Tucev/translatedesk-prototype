@@ -246,6 +246,7 @@ DEPENDENCIES
   railroady
   rails (~> 3.2.0)
   rb-fsevent
+  sass
   sass-rails
   sqlite3
   thin

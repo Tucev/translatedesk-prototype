@@ -30,6 +30,7 @@ end
 group :assets do
   gem 'quiet_assets'
   gem 'sass-rails'
+  gem 'sass'
   gem 'compass-rails'
   gem 'bootstrap-sass', '~> 2.3.2.1'
   gem 'font-awesome-rails'
