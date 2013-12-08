@@ -155,8 +155,7 @@
       cursor: pointer;
       color: $linkColor;
       float: right;
-      padding: $unit;
-      padding-right: 0;
+      padding: $unit 0 $unit $unit/2;
       display: block;
       font-size: $medium;
     }

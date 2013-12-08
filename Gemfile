@@ -23,7 +23,7 @@ group :development do
   gem 'railroady'
   gem 'guard', '>= 2.2.2', :require => false
   gem 'guard-livereload',  :require => false
-  gem 'rack-livereload',   :require => false
+  gem 'rack-livereload'
   gem 'rb-fsevent',        :require => false
 end
 
