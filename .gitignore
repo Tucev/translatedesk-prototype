@@ -7,3 +7,4 @@ config/database.yml
 config/apis.yml
 log
 vendor
+.sass-cache

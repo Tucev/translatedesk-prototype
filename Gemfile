@@ -18,6 +18,12 @@ gem 'bitly'
 gem 'koala', '~> 1.8.0rc1'
 gem 'i18n', '>= 0.6.6'
 gem 'sqlite3'
+gem 'quiet_assets'
+gem 'sass-rails'
+gem 'sass'
+gem 'compass-rails'
+gem 'bootstrap-sass', '~> 2.3.2.1'
+gem 'font-awesome-rails'
 
 group :development do
   gem 'railroady'
@@ -28,11 +34,5 @@ group :development do
 end
 
 group :assets do
-  gem 'quiet_assets'
-  gem 'sass-rails'
-  gem 'sass'
-  gem 'compass-rails'
-  gem 'bootstrap-sass', '~> 2.3.2.1'
-  gem 'font-awesome-rails'
   gem 'uglifier', '>= 1.0.3'
 end
