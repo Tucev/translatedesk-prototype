@@ -24,6 +24,7 @@ gem 'sass'
 gem 'compass-rails'
 gem 'bootstrap-sass', '~> 2.3.2.1'
 gem 'font-awesome-rails'
+gem 'closure-compiler'
 
 group :development do
   gem 'railroady'
