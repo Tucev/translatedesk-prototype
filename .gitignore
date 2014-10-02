@@ -8,3 +8,4 @@ config/apis.yml
 log
 vendor
 .sass-cache
+config/initializers/omniauth.rb

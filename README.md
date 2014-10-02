@@ -14,6 +14,7 @@ Written in Ruby On Rails 3 (Ruby 1.9) + AngularJS.
 * Install `dict`. Ubuntu installation using apt: `apt-get install dict`. Mac installation with homebrew: `brew install dict`
 * Optionally install `dictd` and some dictionaries for it, in order to have your own dictionary server; install it on Debian / Ubuntu using `apt-get install dict dictd`.
 * Run `rake db:migrate` to create the tables in the database
+* Copy `config/initializers/omniauth.rb.example` to `config/initializers/omniauth.rb` and set the callback URL for OmniAuth providers (like Twitter and Facebook)
 * Start the server: `rails s`
 * Open http://localhost:3000 in your browser
 * Check the documention under doc/, which can also be updated by running `rake diagram:all` (uses railroady gem)
